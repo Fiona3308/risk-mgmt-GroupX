@@ -4,9 +4,10 @@
 # 1. Individual stock:
 ###   1.0. GENERAL INPUT:
 * General Input
-      *  Ticker
+
+      ** Ticker
       ** Position start date
-      **Position end date      
+      ** Position end date      
 * Parameters Input
       - Initial Investment
       - Window
