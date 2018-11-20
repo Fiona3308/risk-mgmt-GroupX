@@ -5,8 +5,8 @@
 ###   1.0. GENERAL INPUT:
 * General Input
       *  Ticker
-**      - Position start date
-**      - Position end date      
+      ** Position start date
+      **Position end date      
 * Parameters Input
       - Initial Investment
       - Window
