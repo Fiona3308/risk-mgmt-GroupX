@@ -2,7 +2,7 @@
 # Framework:
 
 # 1. Individual stock:
-*   1.0. GENERAL INPUT:
+###   1.0. GENERAL INPUT:
 *      - position_date_1
 *      - end_date
 *      - ticker
