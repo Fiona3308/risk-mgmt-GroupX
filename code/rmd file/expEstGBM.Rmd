@@ -1,0 +1,137 @@
+---
+title: "expEstGBM"
+author: "Xiaojie Wei"
+date: "November 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+expEstGBM <- function(prices,lambda){
+  mu_bar <- NA
+  var_bar <- NA
+  mu_gbm <- NA
+  sigma_gbm <- NA
+  expweight <- NA
+  weight <- NA
+  a <- 1
+  
+  rtn <- -diff(log(prices),1)
+  rtnsq <- rtn*rtn
+  wid_len <- ceiling(log(0.01)/log(lambda))
+  if(wid_len > 5000){wid_len <- 5000}
+  
+  period <- length(rtn)-wid_len
+  
+  for (i in 1:wid_len){
+    expweight[i] <- a*(lambda)^(i)
+  }
+  
+  for (i in 1:wid_len){
+    weight[i] <- expweight[i]/sum(expweight)
+  }
+  
+  for (i in 1:period){
+   mu_bar[i] <- mean((rtn[i:i+wid_len-1])*weight)
+   var_bar[i] <- mean((rtnsq[i:i+wid_len-1])*weight) - mu_bar[i]^2
+
+   sigma_gbm[i] <- sqrt(var_bar[i]/(1/252))
+   mu_gbm[i] <- mu_bar[i]/(1/252) + (sigma_gbm[i]^2)/2
+  }
+  
+  est <- as.data.frame(cbind(mu_gbm,sigma_gbm))
+  return(est)
+}
+```
+
+```{r}
+expEstGBM <- function(prices,lambda){
+  mu_bar <- NA
+  var_bar <- NA
+  mu_gbm <- NA
+  sigma_gbm <- NA
+  expweight <- NA
+  weight <- NA
+  a <- 1
+  
+  rtn <- -diff(log(prices),1)
+  rtnsq <- rtn*rtn
+  wid_len <-2
+ # wid_len <- ceiling(log(0.01)/log(lambda))
+  #if(wid_len > 5000){wid_len <- 5000}
+  
+  period <- length(rtn)-wid_len
+  
+  for (i in 1:wid_len){
+    expweight[i] <- a*(lambda)^(i-1)
+  }
+  
+  for (i in 1:wid_len){
+    weight[i] <- expweight[i]/sum(expweight)
+  }
+  
+  for (i in 1:period){
+   mu_bar[i] <- mean((rtn[i:i+wid_len-1])*weight)
+   var_bar[i] <- mean((rtnsq[i:i+wid_len-1])*weight) - mu_bar[i]^2
+
+   sigma_gbm[i] <- sqrt(var_bar[i]/(1/252))
+   mu_gbm[i] <- mu_bar[i]/(1/252) + (sigma_gbm[i]^2)/2
+  }
+```
+
+
+```{r}
+lambda <- 0.99936
+  mu_bar <- NA
+  var_bar <- NA
+  mu_gbm <- NA
+  sigma_gbm <- NA
+  expweight <- NA
+  weight <- NA
+  a <- 1
+  wid_len <- 5
+  for (i in 1:wid_len){
+    expweight[i] <- a*(lambda)^(i-1)
+  }
+  expweight
+    for (i in 1:wid_len){
+    weight[i] <- expweight[i]/sum(expweight)
+    }
+  weight
+  
+  rtn <- -diff(log(data$priceX),1)
+  rtnsq <- rtn*rtn
+  
+  period <- length(rtn)-wid_len
+  
+    for (i in 1:period){
+   mu_bar[i] <- mean((rtn[i:i+wid_len-1])*weight)
+   var_bar[i] <- mean((rtnsq[i:i+wid_len-1])*weight) - mu_bar[i]^2
+
+   sigma_gbm[i] <- sqrt(var_bar[i]/(1/252))
+   mu_gbm[i] <- mu_bar[i]/(1/252) + (sigma_gbm[i]^2)/2
+    }
+  head(mu_bar)
+  head(var_bar)
+  head(sigma_gbm)
+  head(mu_gbm)
+  head(rtn)
+```
+
+
+```{r}
+lambda1 <- 0.999682
+est1 <- expEstGBM(data$priceX,lambda1)
+test1 <- cbind(data[1:5440,],est1[1:5440,])
+```
+
+```{r}
+ggplot()+
+  geom_line(aes(x=test1$Dates,y=test1$sigma_gbm,color="Historical VaR"))
+```
+
+
+

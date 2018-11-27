@@ -1,0 +1,29 @@
+---
+title: "winEstGBM"
+output: html_notebook
+---
+
+
+```{r}
+winEstGBM <- function(prices,wid_len){
+  
+  rtn <- -diff(log(prices),1)      # log returns of stock price  
+  period <- length(rtn)-wid_len    # period for loop 
+  mu_bar <- NA                     # mean of log returns
+  var_bar <- NA                    # standard deviation of log returns
+  mu_gbm <- NA                     # estimates for mu of price
+  sigma_gbm <- NA                  # estimates for sigma of price
+  
+  
+  for (i in 1:period){
+   mu_bar[i] <- mean((rtn[i:(i+wid_len-1)]))
+   var_bar[i] <- var((rtn[i:(i+wid_len-1)]))
+
+   sigma_gbm[i] <- sqrt(var_bar[i]/(1/252))
+   mu_gbm[i] <- mu_bar[i]/(1/252) + (sigma_gbm[i]^2)/2
+  }
+  
+  est <- as.data.frame(cbind(mu_gbm,sigma_gbm))
+  return(est)
+}
+```
