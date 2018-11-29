@@ -30,5 +30,3 @@ expEstGBM <- function(prices,dRtn,lambda){
   return(est)
 }
 
-
-

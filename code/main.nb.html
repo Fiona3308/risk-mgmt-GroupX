@@ -176,18 +176,28 @@ $(document).ready(function () {
 <p>Step 1: Load Data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWE9NIDwtIHJlYWQuY3N2KFwiLi4vZGF0YS9YT00tYmxvb21iZXJnLmNzdlwiKVxuSU5UQyA8LSByZWFkLmNzdihcIi4uL2RhdGEvSU5UQy1ibG9vbWJlcmcuY3N2XCIpXG5cblhPTSREYXRlcyA8LSBhcy5EYXRlKFhPTSREYXRlcyxcIiVtLyVkLyVZXCIpXG5JTlRDJERhdGVzIDwtIGFzLkRhdGUoSU5UQyREYXRlcyxcIiVtLyVkLyVZXCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWE9NIDwtIHJlYWQuY3N2KFwiLi4vZGF0YS9YT00tYmxvb21iZXJnLmNzdlwiKVxuSU5UQyA8LSByZWFkLmNzdihcIi4uL2RhdGEvSU5UQy1ibG9vbWJlcmcuY3N2XCIpXG5YT00kRGF0ZXMgPC0gYXMuRGF0ZShYT00kRGF0ZXMsXCIlbS8lZC8lWVwiKVxuSU5UQyREYXRlcyA8LSBhcy5EYXRlKElOVEMkRGF0ZXMsXCIlbS8lZC8lWVwiKVxuYGBgIn0= -->
 <pre class="r"><code>XOM &lt;- read.csv(&quot;../data/XOM-bloomberg.csv&quot;)
 INTC &lt;- read.csv(&quot;../data/INTC-bloomberg.csv&quot;)
-
 XOM$Dates &lt;- as.Date(XOM$Dates,&quot;%m/%d/%Y&quot;)
 INTC$Dates &lt;- as.Date(INTC$Dates,&quot;%m/%d/%Y&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Step 2: Source function and fiels</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxhdGUgcGFyYW1ldGVyIGZvciByZXR1cm5cbnNvdXJjZShcIi4uL2NvZGUvd2luRXN0R0JNLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvZXhwRXN0R0JNLlJcIilcbmBgYCJ9 -->
+<pre class="r"><code># calculate parameter for return
+source(&quot;../code/winEstGBM.R&quot;)
+source(&quot;../code/expEstGBM.R&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Step 3: Plot results</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpTdGVwIDE6IExvYWQgRGF0YQ0KYGBge3J9DQpYT00gPC0gcmVhZC5jc3YoIi4uL2RhdGEvWE9NLWJsb29tYmVyZy5jc3YiKQ0KSU5UQyA8LSByZWFkLmNzdigiLi4vZGF0YS9JTlRDLWJsb29tYmVyZy5jc3YiKQ0KDQpYT00kRGF0ZXMgPC0gYXMuRGF0ZShYT00kRGF0ZXMsIiVtLyVkLyVZIikNCklOVEMkRGF0ZXMgPC0gYXMuRGF0ZShJTlRDJERhdGVzLCIlbS8lZC8lWSIpDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpTdGVwIDE6IExvYWQgRGF0YQ0KYGBge3J9DQpYT00gPC0gcmVhZC5jc3YoIi4uL2RhdGEvWE9NLWJsb29tYmVyZy5jc3YiKQ0KSU5UQyA8LSByZWFkLmNzdigiLi4vZGF0YS9JTlRDLWJsb29tYmVyZy5jc3YiKQ0KDQpYT00kRGF0ZXMgPC0gYXMuRGF0ZShYT00kRGF0ZXMsIiVtLyVkLyVZIikNCklOVEMkRGF0ZXMgPC0gYXMuRGF0ZShJTlRDJERhdGVzLCIlbS8lZC8lWSIpDQpgYGANCg0KU3RlcCAyOiBTb3VyY2UgZnVuY3Rpb24gYW5kIGZpZWxzIA0KYGBge3J9DQojIGNhbGN1bGF0ZSBwYXJhbWV0ZXIgZm9yIHJldHVybg0Kc291cmNlKCIuLi9jb2RlL3dpbkVzdEdCTS5SIikNCnNvdXJjZSgiLi4vY29kZS9leHBFc3RHQk0uUiIpDQoNCiMgaGlzdG9yaWNhbCBWYVIvRVMNCg0KIyBtb250ZSBjYXJsbyBWYVIvRVMNCg0KIyBQYXJhbWV0cmljIFZhUi9FUw0KYGBgDQoNClN0ZXAgMzogUGxvdCByZXN1bHRzDQo=</div>
 
 
 

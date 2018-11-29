@@ -13,3 +13,17 @@ XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
 INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 ```
 
+Step 2: Source function and fiels 
+```{r}
+# calculate parameter for return
+source("../code/winEstGBM.R")
+source("../code/expEstGBM.R")
+
+# historical VaR/ES
+
+# monte carlo VaR/ES
+
+# Parametric VaR/ES
+```
+
+Step 3: Plot results

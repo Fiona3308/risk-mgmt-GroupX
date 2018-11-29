@@ -1,4 +1,4 @@
-gbmES<-function(v0,t,p,mu,vol){
+gbmES<-function(v0,mu,sigma,p,t){
   #v0 = Initial portfolio value
   #mu = Drift
   #sigma = Volatility.
