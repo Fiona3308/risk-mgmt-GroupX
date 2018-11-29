@@ -1,4 +1,6 @@
 # risk-mgmt-GroupX
+# online sample : https://github.com/Hengyi-Zhu/risk-mgmt-eevee
+# online system sample: http://risk-mgmt-eevee.herokuapp.com/index#feature2
 # Framework:
 
 # 1. Individual stock:
