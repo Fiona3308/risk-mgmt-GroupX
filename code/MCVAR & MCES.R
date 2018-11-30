@@ -14,9 +14,8 @@ Monte_VaR <- function(s0, mu, sigma, p, t, npaths){
     mc <- NULL
     for (i in 1:npaths){
       random <- rnorm(1,0,sqrt(t))
-      temp <- s0 - (s0 * exp((sigma[j] * t ^ 2 * pnrom(1-p)) 
-                             + (mu[j]+random-sigma[j] ^ 2 / 2) * t))
-      # temp <- s0 - (s0 * exp((mu[j] - sigma[j] ^ 2 / 2) * t + sigma[j] * random))
+      temp <- s0 - (s0 * exp((sigma[j] * sqrt(t)  * qnorm(1-p)) 
+                            + (mu[j]+random-sigma[j] ^ 2 / 2) * t))
       mc <- c(mc, temp)
     }
     MCVaR <- c(MCVaR, quantile(mc, p, na.rm = TRUE))
@@ -31,9 +30,8 @@ Monte_ES <- function(s0, mu, sigma, p, t, npaths){
     mc <- NULL
     for (i in 1:npaths){
       random <- rnorm(1,0,sqrt(t))
-      temp <- s0 - (s0 * exp((sigma[j] * t ^ 2 * pnrom(1-p)) 
+      temp <- s0 - (s0 * exp((sigma[j] * sqrt(t)  * qnorm(1-p)) 
                              + (mu[j]+random-sigma[j] ^ 2 / 2) * t))
-      # temp <- s0 - (s0 * exp((mu[j] - sigma[j] ^ 2 / 2) * t + sigma[j] * random))
       mc <- c(mc, temp)
     }
     es <- mc[mc > quantile(mc, p, na.rm = TRUE)]

@@ -22,9 +22,18 @@ source("../code/expEstGBM.R")
 # historical VaR/ES
 
 # monte carlo VaR/ES
+source("../code/MCVAR & MCES.R")
 
 # Parametric VaR/ES
 ```
 
 Step 3: Plot results
+```{r}
+
+ll <- Monte_VaR(10000,m$mu_gbm,m$sigma_gbm,0.99,5/252,100)
+
+
+
+plot(ll,type="l")
+```
 
