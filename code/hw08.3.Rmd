@@ -1,0 +1,70 @@
+---
+title: "FRM HW8"
+author: "Xiaojie Wei"
+date: "2018年11月1日"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+########### question 3 #################################################
+rm(list = ls())
+# input dataset
+setwd("C:/Users/Xiaojie Wei/Desktop/Fall 2018/GR5320 Financial Risk Management/HW")
+XOM_raw <- read.csv("HW5/XOM-bloomberg.csv", as.is = TRUE, header = TRUE)
+INTC_raw <- read.csv("HW5/INTC-bloomberg.csv", as.is = TRUE, header = TRUE)
+
+
+XOM<-as.numeric(XOM_raw$PX_LAST)
+XOM1d<-as.numeric(XOM_raw$PX_CLOSE_1D)
+INTC<-as.numeric(INTC_raw$PX_LAST)
+INTC1d<-as.numeric(INTC_raw$PX_CLOSE_1D)
+ 
+n=min(length(XOM),length(INTC))
+date<-XOM_raw$Dates[1:n]
+ 
+Portfoilo<-XOM[1:n]*156+INTC[1:n]*200
+Portfoilo1d<-XOM1d[1:n]*156+INTC1d[1:n]*200
+
+Portrtn<-Portfoilo/Portfoilo1d
+
+PortWinGBM5r<-WinEstGBM(Portrtn,20,5)
+PortWinGBMdrift5y<-unlist(PortWinGBM5r[2])  
+PortWinGBMvol5y<-unlist(PortWinGBM5r[1]) 
+
+s0      = 10000
+years   = 5
+dt      = 5/252
+VaRp    = 0.99
+ESp     = 0.975
+npts = 252*years
+npaths = 10000
+ntrials = min(length(XOM)-npts, length(INTC)-npts, length(Portrtn)-npts)
+
+scenarios<-matrix(rep(0,npaths*ntrials),nrow=npaths)
+bgmsampset<-function(dt,k,mu,sigma){
+  return(exp(sqrt(dt) * rnorm(k,mean=0,sd=1)*sigma+ (mu - sigma^2/2)*dt))
+}
+for (i in 1:ntrials) {
+  scenarios[,i]=s0*bgmsampset(dt,npaths,PortWinGBMdrift5y[i],PortWinGBMvol5y[i])
+}
+# sort
+portsort<-matrix(rep(0,npaths*ntrials),nrow=npaths)
+for (i in 1:ntrials) {
+  portsort[,i]=sort(scenarios[,i],decreasing = F)
+}
+
+portresults<-results(ntrials,npaths,VaRp,ESp,portsort,s0)
+portformulavar<-gbmVaR(s0,dt,VaRp,PortWinGBMvol5y,PortWinGBMdrift5y) 
+
+plot(portresults[1:5040,1],ylab = "",main = "Port VaR and ES",type = "l",col="red")
+points(portresults[1:5040,2],type = "l",col="blue")
+points(portformulavar,type = "l",col="black")
+legend("bottomright", legend = c("formula VaR","MC VaR","MC ES"), fill = c("black","red","blue"), cex = .5)
+```
