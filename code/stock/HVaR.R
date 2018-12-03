@@ -12,6 +12,7 @@ HVaR_S <- function(return,p){
   return(as.data.frame(Hvar))
 }
 
+#############################################
 
 HVaR_S <- function(pirce,p,dRtn,year){
   stocklog <- log(price)
@@ -35,14 +36,18 @@ HVaR_S <- function(pirce,p,dRtn,year){
   return(as.data.frame(Hvar))
 }
 
+#####################################################33
 
 dRtn <- -diff(log(XOM$PX_LAST),5)
 
 rtn <- c()
-for (i in length(XOM$PX_LAST)){
-  logr <- XOM$PX_LAST
+for (i in 1:length(XOM$PX_LAST)){
+  logr <- log(XOM$PX_LAST)
   rtn[i] <- logr[i]-logr[i+4]
 }
 
-rtn
-logr[5]
+View(rtn)
+
+
+m <- c(1,3,5,6,7)
+-diff(m)

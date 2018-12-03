@@ -21,6 +21,7 @@ source("../code/expEstGBM.R")
 
 # historical VaR/ES
 
+
 # monte carlo VaR/ES
 source("../code/MCVAR & MCES.R")
 
@@ -35,5 +36,10 @@ ll <- Monte_VaR(10000,m$mu_gbm,m$sigma_gbm,0.99,5/252,100)
 
 
 plot(ll,type="l")
+```
+
+Step 4: Caculate Indicidual Stock
+```{r}
+source("../doc/calculation_measure.R")
 ```
 
