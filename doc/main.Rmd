@@ -16,12 +16,12 @@ INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 Step 2: Source function and fiels 
 ```{r}
 # calculate parameter for return
-source("../code/winEstGBM.R")
-source("../code/expEstGBM.R")
+source("../code/parameter/winEstGBM.R")
+source("../code/parameter/expEstGBM.R")
 
 # historical VaR/ES
 
-
+getwd()
 # monte carlo VaR/ES
 source("../code/MCVAR & MCES.R")
 

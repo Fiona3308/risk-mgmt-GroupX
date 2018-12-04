@@ -1,0 +1,41 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# portfolio = stock1 * N1 + stock2 * N2
+# V = S1 * N1 + S2 * N2
+# dS1 = u1S1dt + u2S2dt
+# dw1dW2 = rho*dt
+# Assuming S1 and S2 follows GBM, Portfolio follows Normal distribution
+
+# Args
+# a = position vector (number of shares of each stock)
+# s = initial stock price vector
+# mu = drift for each stock
+# sigma = volatility fro each stock
+# rho = correlation matrci of driving brownian motion
+# p = percentile at which to compute VaR
+# t = horizon at which to compute VaR (in years)
+
+# Returns
+# VaR = VaR calculated from mean and variance of portfolio
+#       Assumes portfolio is normally distributed.
+#       VaR=V0-Vt=V0-(E[VT]-qnorm(p)sd[VT])
+# v0 = current portfolio value
+# evt = expected value of portfolio at horizon
+# evt2 = expected value of square of portfolio value at horizon
+# sdvt = standard deviation of portfolio values at horizon
+
+es1 <- winEstGBM(XOM$PX_LAST,1,5)
+
+evt <- N1*es1$mu_gbm + N2*es2$mu_gbm
+
+vt <- N1^2*s1^2+N2^2*s2^2+2*N1*N2*S1*S2
+
+
+
+
+```
+
