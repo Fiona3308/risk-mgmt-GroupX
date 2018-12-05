@@ -5,6 +5,7 @@ output: html_notebook
 
 
 Step 1: Load Data
+
 ```{r}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
 INTC <- read.csv("../data/INTC-bloomberg.csv")
@@ -41,5 +42,50 @@ plot(ll,type="l")
 Step 4: Caculate Indicidual Stock
 ```{r}
 source("../doc/calculation_measure.R")
+```
+
+
+#########################################################
+Step:0 test
+```{r}
+# package to load stock price
+if (!require("quantmod")) {
+    install.packages("quantmod")
+    library(quantmod)
+}
+# Get me my beloved pipe operator!
+if (!require("magrittr")) {
+    install.packages("magrittr")
+    library(magrittr)
+}
+```
+
+```{r}
+# one approach to load stock dataset
+start <- as.Date("2010-01-01")
+end <- as.Date("2018-10-01")
+
+getSymbols("AAPL", src = "yahoo", from = start, to = end)
+
+aple <- Ad(getSymbols("AAPL", src = "yahoo", auto.assign= F, from = start))
+intc <- Ad(getSymbols("INTC", src = "yahoo", auto.assign= F, from = start))
+
+head(aple)
+head(intc)
+
+plot(AAPL[, "AAPL.Close"], main = "AAPL")
+
+returns_AAPL <- Return.calculate(aaple, method=c("simple"))
+
+# useful in plot
+chartSeries(returns_AAPL)
+
+```
+
+```{r}
+ getSymbols(c("MSFT", "GOOG"), src = "yahoo", from = start, to = end)
+
+stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Close"], 
+    GOOG = GOOG[, "GOOG.Close"]))
 ```
 

@@ -217,9 +217,56 @@ plot(ll,type=&quot;l&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<div id="section" class="section level57">
+<p></p>
+<p>Step:0 test</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYWNrYWdlIHRvIGxvYWQgc3RvY2sgcHJpY2VcbmlmICghcmVxdWlyZShcInF1YW50bW9kXCIpKSB7XG4gICAgaW5zdGFsbC5wYWNrYWdlcyhcInF1YW50bW9kXCIpXG4gICAgbGlicmFyeShxdWFudG1vZClcbn1cbiMgR2V0IG1lIG15IGJlbG92ZWQgcGlwZSBvcGVyYXRvciFcbmlmICghcmVxdWlyZShcIm1hZ3JpdHRyXCIpKSB7XG4gICAgaW5zdGFsbC5wYWNrYWdlcyhcIm1hZ3JpdHRyXCIpXG4gICAgbGlicmFyeShtYWdyaXR0cilcbn1cbmBgYCJ9 -->
+<pre class="r"><code># package to load stock price
+if (!require(&quot;quantmod&quot;)) {
+    install.packages(&quot;quantmod&quot;)
+    library(quantmod)
+}
+# Get me my beloved pipe operator!
+if (!require(&quot;magrittr&quot;)) {
+    install.packages(&quot;magrittr&quot;)
+    library(magrittr)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChpbnRjKVxuXG5gYGAifQ== -->
+<pre class="r"><code>head(intc)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICBJTlRDLkFkanVzdGVkXG4yMDEwLTAxLTA0ICAgICAgMTUuNzEwNzVcbjIwMTAtMDEtMDUgICAgICAxNS43MDMyM1xuMjAxMC0wMS0wNiAgICAgIDE1LjY1MDU2XG4yMDEwLTAxLTA3ICAgICAgMTUuNTAwMDdcbjIwMTAtMDEtMDggICAgICAxNS42NzMxM1xuMjAxMC0wMS0xMSAgICAgIDE1Ljc2MzQyXG4ifQ== -->
+<pre><code>           INTC.Adjusted
+2010-01-04      15.71075
+2010-01-05      15.70323
+2010-01-06      15.65056
+2010-01-07      15.50007
+2010-01-08      15.67313
+2010-01-11      15.76342</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGdldFN5bWJvbHMoYyhcIk1TRlRcIiwgXCJHT09HXCIpLCBzcmMgPSBcInlhaG9vXCIsIGZyb20gPSBzdGFydCwgdG8gPSBlbmQpXG5cbnN0b2NrcyA8LSBhcy54dHMoZGF0YS5mcmFtZShBQVBMID0gQUFQTFssIFwiQUFQTC5DbG9zZVwiXSwgTVNGVCA9IE1TRlRbLCBcIk1TRlQuQ2xvc2VcIl0sIFxuICAgIEdPT0cgPSBHT09HWywgXCJHT09HLkNsb3NlXCJdKSlcbmBgYCJ9 -->
+<pre class="r"><code> getSymbols(c(&quot;MSFT&quot;, &quot;GOOG&quot;), src = &quot;yahoo&quot;, from = start, to = end)
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpTdGVwIDE6IExvYWQgRGF0YQ0KYGBge3J9DQpYT00gPC0gcmVhZC5jc3YoIi4uL2RhdGEvWE9NLWJsb29tYmVyZy5jc3YiKQ0KSU5UQyA8LSByZWFkLmNzdigiLi4vZGF0YS9JTlRDLWJsb29tYmVyZy5jc3YiKQ0KDQpYT00kRGF0ZXMgPC0gYXMuRGF0ZShYT00kRGF0ZXMsIiVtLyVkLyVZIikNCklOVEMkRGF0ZXMgPC0gYXMuRGF0ZShJTlRDJERhdGVzLCIlbS8lZC8lWSIpDQpgYGANCg0KU3RlcCAyOiBTb3VyY2UgZnVuY3Rpb24gYW5kIGZpZWxzIA0KYGBge3J9DQojIGNhbGN1bGF0ZSBwYXJhbWV0ZXIgZm9yIHJldHVybg0Kc291cmNlKCIuLi9jb2RlL3BhcmFtZXRlci93aW5Fc3RHQk0uUiIpDQpzb3VyY2UoIi4uL2NvZGUvcGFyYW1ldGVyL2V4cEVzdEdCTS5SIikNCg0KIyBoaXN0b3JpY2FsIFZhUi9FUw0KDQpnZXR3ZCgpDQojIG1vbnRlIGNhcmxvIFZhUi9FUw0Kc291cmNlKCIuLi9jb2RlL01DVkFSICYgTUNFUy5SIikNCg0KIyBQYXJhbWV0cmljIFZhUi9FUw0KYGBgDQoNClN0ZXAgMzogUGxvdCByZXN1bHRzDQpgYGB7cn0NCg0KbGwgPC0gTW9udGVfVmFSKDEwMDAwLG0kbXVfZ2JtLG0kc2lnbWFfZ2JtLDAuOTksNS8yNTIsMTAwKQ0KDQoNCg0KcGxvdChsbCx0eXBlPSJsIikNCmBgYA0KDQpTdGVwIDQ6IENhY3VsYXRlIEluZGljaWR1YWwgU3RvY2sNCmBgYHtyfQ0Kc291cmNlKCIuLi9kb2MvY2FsY3VsYXRpb25fbWVhc3VyZS5SIikNCmBgYA0KDQo=</div>
+stocks &lt;- as.xts(data.frame(AAPL = AAPL[, &quot;AAPL.Close&quot;], MSFT = MSFT[, &quot;MSFT.Close&quot;], 
+    GOOG = GOOG[, &quot;GOOG.Close&quot;]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpTdGVwIDE6IExvYWQgRGF0YQ0KDQpgYGB7cn0NClhPTSA8LSByZWFkLmNzdigiLi4vZGF0YS9YT00tYmxvb21iZXJnLmNzdiIpDQpJTlRDIDwtIHJlYWQuY3N2KCIuLi9kYXRhL0lOVEMtYmxvb21iZXJnLmNzdiIpDQoNClhPTSREYXRlcyA8LSBhcy5EYXRlKFhPTSREYXRlcywiJW0vJWQvJVkiKQ0KSU5UQyREYXRlcyA8LSBhcy5EYXRlKElOVEMkRGF0ZXMsIiVtLyVkLyVZIikNCmBgYA0KDQpTdGVwIDI6IFNvdXJjZSBmdW5jdGlvbiBhbmQgZmllbHMgDQpgYGB7cn0NCiMgY2FsY3VsYXRlIHBhcmFtZXRlciBmb3IgcmV0dXJuDQpzb3VyY2UoIi4uL2NvZGUvcGFyYW1ldGVyL3dpbkVzdEdCTS5SIikNCnNvdXJjZSgiLi4vY29kZS9wYXJhbWV0ZXIvZXhwRXN0R0JNLlIiKQ0KDQojIGhpc3RvcmljYWwgVmFSL0VTDQoNCmdldHdkKCkNCiMgbW9udGUgY2FybG8gVmFSL0VTDQpzb3VyY2UoIi4uL2NvZGUvTUNWQVIgJiBNQ0VTLlIiKQ0KDQojIFBhcmFtZXRyaWMgVmFSL0VTDQpgYGANCg0KU3RlcCAzOiBQbG90IHJlc3VsdHMNCmBgYHtyfQ0KDQpsbCA8LSBNb250ZV9WYVIoMTAwMDAsbSRtdV9nYm0sbSRzaWdtYV9nYm0sMC45OSw1LzI1MiwxMDApDQoNCg0KDQpwbG90KGxsLHR5cGU9ImwiKQ0KYGBgDQoNClN0ZXAgNDogQ2FjdWxhdGUgSW5kaWNpZHVhbCBTdG9jaw0KYGBge3J9DQpzb3VyY2UoIi4uL2RvYy9jYWxjdWxhdGlvbl9tZWFzdXJlLlIiKQ0KYGBgDQoNCg0KIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjDQpTdGVwOjAgdGVzdA0KYGBge3J9DQojIHBhY2thZ2UgdG8gbG9hZCBzdG9jayBwcmljZQ0KaWYgKCFyZXF1aXJlKCJxdWFudG1vZCIpKSB7DQogICAgaW5zdGFsbC5wYWNrYWdlcygicXVhbnRtb2QiKQ0KICAgIGxpYnJhcnkocXVhbnRtb2QpDQp9DQojIEdldCBtZSBteSBiZWxvdmVkIHBpcGUgb3BlcmF0b3IhDQppZiAoIXJlcXVpcmUoIm1hZ3JpdHRyIikpIHsNCiAgICBpbnN0YWxsLnBhY2thZ2VzKCJtYWdyaXR0ciIpDQogICAgbGlicmFyeShtYWdyaXR0cikNCn0NCmBgYA0KDQpgYGB7cn0NCiMgb25lIGFwcHJvYWNoIHRvIGxvYWQgc3RvY2sgZGF0YXNldA0Kc3RhcnQgPC0gYXMuRGF0ZSgiMjAxMC0wMS0wMSIpDQplbmQgPC0gYXMuRGF0ZSgiMjAxOC0xMC0wMSIpDQoNCmdldFN5bWJvbHMoIkFBUEwiLCBzcmMgPSAieWFob28iLCBmcm9tID0gc3RhcnQsIHRvID0gZW5kKQ0KDQphcGxlIDwtIEFkKGdldFN5bWJvbHMoIkFBUEwiLCBzcmMgPSAieWFob28iLCBhdXRvLmFzc2lnbj0gRiwgZnJvbSA9IHN0YXJ0KSkNCmludGMgPC0gQWQoZ2V0U3ltYm9scygiSU5UQyIsIHNyYyA9ICJ5YWhvbyIsIGF1dG8uYXNzaWduPSBGLCBmcm9tID0gc3RhcnQpKQ0KDQpoZWFkKGFwbGUpDQpoZWFkKGludGMpDQoNCnBsb3QoQUFQTFssICJBQVBMLkNsb3NlIl0sIG1haW4gPSAiQUFQTCIpDQoNCnJldHVybnNfQUFQTCA8LSBSZXR1cm4uY2FsY3VsYXRlKGFhcGxlLCBtZXRob2Q9Yygic2ltcGxlIikpDQoNCiMgdXNlZnVsIGluIHBsb3QNCmNoYXJ0U2VyaWVzKHJldHVybnNfQUFQTCkNCg0KYGBgDQoNCmBgYHtyfQ0KIGdldFN5bWJvbHMoYygiTVNGVCIsICJHT09HIiksIHNyYyA9ICJ5YWhvbyIsIGZyb20gPSBzdGFydCwgdG8gPSBlbmQpDQoNCnN0b2NrcyA8LSBhcy54dHMoZGF0YS5mcmFtZShBQVBMID0gQUFQTFssICJBQVBMLkNsb3NlIl0sIE1TRlQgPSBNU0ZUWywgIk1TRlQuQ2xvc2UiXSwgDQogICAgR09PRyA9IEdPT0dbLCAiR09PRy5DbG9zZSJdKSkNCmBgYA0KDQo=</div>
 
 
 
