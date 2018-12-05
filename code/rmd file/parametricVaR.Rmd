@@ -27,10 +27,63 @@ output: html_notebook
 # evt = expected value of portfolio at horizon
 # evt2 = expected value of square of portfolio value at horizon
 # sdvt = standard deviation of portfolio values at horizon
+```
 
-es1 <- winEstGBM(XOM$PX_LAST,1,5)
+```{r}
+a <- c(N1,N2)
+s0 <- c(s1_0,s2_0)
+v0 <- T
+mu <- c(mu1,mu2)
+sigma <- c(sigma1,sigma2)
+datadt <- 1/252
+rtn1 <- -diff(log(s1),1)
+rtn2 <- -diff(log(s2),1)
+rho <- cov(rtn1,rtn2)/sigma1*sigma2*datadt
+t <- 5/252 # horizon
 
-evt <- N1*es1$mu_gbm + N2*es2$mu_gbm
+# v0
+value <- 0 
+for (i in 1:length(a)){
+  value <- value+a[i]*s0[i]    # initial value of portfolio
+}
+  
+if (v0 == T){
+  v0
+}else{
+  v0 <- value
+}
 
+# evt
+exp_vt <- 0
+for(i in 1:length(a)){
+  exp_vt <- exp_vt + a[i]*s0[i]*exp(mu[i]*t)
+}
+
+# evt2
+part1 <- 0
+for (i in 1:length(a)){
+  part1 <- part1 + a[i]^2*s0[i]^2*exp((2*mu[i]+sigma[i]^2)*t)
+}
+
+
+
+```
+
+```{r}
+library(qpcR)
+est1 <- winEstGBM(XOM$PX_LAST,1,5)
+est2 <- winEstGBM(INTC$PX_LAST,1,5)
+t <- 5/252
+
+  a <- c(20,30)
+  s0 <- c(5,6)
+  mu <- as.data.frame(qpcR:::cbind.na(est1$mu_gbm,est2$mu_gbm))
+  sigma <- as.data.frame(qpcR:::cbind.na(est1$sigma_gbm,est2$sigma_gbm))
+  
+  mm <- a[1]*s0[1]*exp(mu[1]*t)
+head(mu[1]*t)
+class(mu[1]*t)
+head(mu$V1)
+head(mm)
 ```
 
