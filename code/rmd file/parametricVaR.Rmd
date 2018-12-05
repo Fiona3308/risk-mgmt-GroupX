@@ -65,8 +65,19 @@ for (i in 1:length(a)){
   part1 <- part1 + a[i]^2*s0[i]^2*exp((2*mu[i]+sigma[i]^2)*t)
 }
 
+part2 <- 2*a[1]*a[2]*s0[1]*so[2]*exp((mu[1]+mu[2]+rho*sigma[1]*sigma[2])*t)
+
+exp_vt2 <- part1+part2
 
 
+# var[vt]
+varvt <- exp_vt2-exp_vt^2
+
+# sd[vt]
+sdvt <- sqrt(varvt)
+
+# VaR
+VaR <- v0 - exp_vt+qnorm(p)*sdvt
 ```
 
 ```{r}
