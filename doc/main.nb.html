@@ -187,12 +187,23 @@ INTC$Dates &lt;- as.Date(INTC$Dates,&quot;%m/%d/%Y&quot;)</code></pre>
 <p>Step 2: Source function and fiels</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0d2QoKVxuXG5gYGAifQ== -->
-<pre class="r"><code>getwd()
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxhdGUgcGFyYW1ldGVyIGZvciByZXR1cm5cbnNvdXJjZShcIi4uL2NvZGUvcGFyYW1ldGVyL3dpbkVzdEdCTS5SXCIpXG5zb3VyY2UoXCIuLi9jb2RlL3BhcmFtZXRlci9leHBFc3RHQk0uUlwiKVxuIyBoaXN0b3JpY2FsIFZhUi9FU1xuZ2V0d2QoKVxuYGBgIn0= -->
+<pre class="r"><code># calculate parameter for return
+source(&quot;../code/parameter/winEstGBM.R&quot;)
+source(&quot;../code/parameter/expEstGBM.R&quot;)
+# historical VaR/ES
+getwd()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQzovVXNlcnMvWGlhb2ppZSBXZWkvRG9jdW1lbnRzL0dpdEh1Yi9yaXNrLW1nbXQtR3JvdXBYL2RvY1wiXG4ifQ== -->
 <pre><code>[1] &quot;C:/Users/Xiaojie Wei/Documents/GitHub/risk-mgmt-GroupX/doc&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtb250ZSBjYXJsbyBWYVIvRVNcbnNvdXJjZShcIi4uL2NvZGUvTUNWQVIgJiBNQ0VTLlJcIilcbmBgYCJ9 -->
+<pre class="r"><code># monte carlo VaR/ES
+source(&quot;../code/MCVAR &amp; MCES.R&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiY2Fubm90IG9wZW4gZmlsZSAnLi4vY29kZS9NQ1ZBUiAmIE1DRVMuUic6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnlFcnJvciBpbiBmaWxlKGZpbGVuYW1lLCBcInJcIiwgZW5jb2RpbmcgPSBlbmNvZGluZykgOiBcbiAgY2Fubm90IG9wZW4gdGhlIGNvbm5lY3Rpb25cbiJ9 -->
+<pre><code>cannot open file '../code/MCVAR &amp; MCES.R': No such file or directoryError in file(filename, &quot;r&quot;, encoding = encoding) : 
+  cannot open the connection</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
