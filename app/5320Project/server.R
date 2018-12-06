@@ -25,20 +25,30 @@ require_symbol <- function(symbol, envir = parent.frame(),date1,date2) {
   envir[[symbol]]
 }
 
+# m <- require_symbol('XOM', symbol_env,date1 = 2010-01-01,date2=2018-12-06)
+# df <- data.frame(date=index(m),m)
+# head(df)
 
-
+# date <- format(index(m))
+# date <- format(time(m))
+# head(date)
 
 
 ##-------------------------------------Server--------------------------------##
 shinyServer(function(input, output) {
   # Create an environment for storing data
-  # symbol_env <- new.env()
+  symbol_env <- new.env()
   
   # Stock
   # Basics Part
   dataInput <- reactive({
-    ticker <- require_symbol(input$stock_enter,date1 = input$start_date,date2 = input$end_date)
+    ticker <- require_symbol(input$stock_enter,date1 = input$dates[1],date2 = input$dates[2])
   })
+  
+  # generalData <- reactive({
+  #   ticker <- require_symbol(input$stock_enter,date1 = input$start_date,date2 = input$end_date)
+  #   df <- data.frame(date=index(ticker),ticker)
+  # })
   
   output$plot1 <- renderDygraph({
     ticker <- dataInput()
@@ -46,7 +56,8 @@ shinyServer(function(input, output) {
       dyRangeSelector()
   })
   
-  output$table1 <- renderDataTable({
+  output$table1 <- renderTable({
     ticker <- dataInput()
+    df <- data.frame(Date=format(index(ticker)),ticker)
   })
 })

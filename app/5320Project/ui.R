@@ -23,9 +23,11 @@ shinyUI(
                         titlePanel('Input Parameters'),
                         textInput(inputId = "stock_enter", label="Ticker", value="XOM"
                         ),
-                        dateInput(inputId = "start_date", label="Start Date",value = "2010-01-01"
-                        ),
-                        dateInput(inputId = "end_date", label="End Date"
+                        # dateInput(inputId = "start_date", label="Start Date",value = "2010-01-01"
+                        # ),
+                        # dateInput(inputId = "end_date", label="End Date"
+                        # ),
+                        dateRangeInput(inputId = "dates",label = "Date Range",start = "2010-01-01", end = as.character(Sys.Date())
                         ),
                         submitButton("Run System")
                       ),
