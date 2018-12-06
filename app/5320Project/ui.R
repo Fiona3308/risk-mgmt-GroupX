@@ -7,36 +7,47 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+library('shiny')
+library('shinythemes')
+library('quantmod')
+library('magrittr')
+
 
 # Define UI for application that draws a histogram
-shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("VaR Calculation System"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-      titlePanel('Input Parameters'),
-      # numericInput(inputId ='numericInput',label='Horizon(days)'),
-      # numericInput(label='Window(years)'),
-      # numericInput(label='VaR Probability'),
-      # numericInput(label='ES Probability'),
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-      tabsetPanel(
-        tabPanel("Stocks", plotOutput("distPlot")),
-        tabPanel("Options"),
-        tabPanel('Portfolio')
-      )
-    )
-  )
-))
+shinyUI(
+  navbarPage("VaR Calculation System",
+             
+             tabPanel("Stock",
+                      sidebarLayout(
+                      sidebarPanel(
+                        titlePanel('Input Parameters'),
+                        textInput(inputId = "stock_enter", label="Ticker", value="XOM"
+                        ),
+                        dateInput(inputId = "start_date", label="Start Date",value = "2010-01-01"
+                        ),
+                        dateInput(inputId = "end_date", label="End Date"
+                        ),
+                        submitButton("Run System")
+                      ),
+                      mainPanel(
+                        tabsetPanel(
+                          tabPanel("Basics",
+                                   h4("Stock Chart Daily Chart"),
+                                   dygraphOutput("plot1"),
+                                   h4("Stock Price(in Table)"),
+                                   tableOutput(outputId="table1")
+                            
+                          ),
+                          tabPanel("VaR"),
+                          tabPanel('ES')
+                        )
+                      )
+                    )
+             ),
+             
+             tabPanel("Option"),
+             
+             tabPanel("Portfolio")
+
+)
+)
