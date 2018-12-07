@@ -43,11 +43,8 @@ par1 <- winEstGBM(price1,dRtn,year)
 par2 <- winEstGBM(price1,dRtn,year)
 
 # historical VaR  #need to revise
-Hvar <- HVaR_S(price1,0.99)
-
-len <- min(length(par1),length(Hvar))
-
-date1=INTC$Dates[1:8371]
+Hvar <- HVaR_S(price1,0.99,dRtn,year)
+date1=INTC$Dates[1:8370]
 plot(date1,Hvar[,1])
 
 # paramentric VaR

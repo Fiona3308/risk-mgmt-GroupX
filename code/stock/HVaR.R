@@ -1,6 +1,7 @@
-HVaR_S <- function(return,p){
+HVaR_S <- function(price,p,dRtn,year){
+  return <- -diff(log(price),dRtn)
   N <- length(return)
-  n <- 5*252
+  n <- year*252
   v0 <- 10000
   rtn_w <- NA
   Hvar <- NA
