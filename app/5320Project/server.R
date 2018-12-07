@@ -45,11 +45,6 @@ shinyServer(function(input, output) {
     ticker <- require_symbol(input$stock_enter,date1 = input$dates[1],date2 = input$dates[2])
   })
   
-  # generalData <- reactive({
-  #   ticker <- require_symbol(input$stock_enter,date1 = input$start_date,date2 = input$end_date)
-  #   df <- data.frame(date=index(ticker),ticker)
-  # })
-  
   output$plot1 <- renderDygraph({
     ticker <- dataInput()
     dygraph(Ad(ticker))%>%

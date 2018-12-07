@@ -21,22 +21,68 @@ source("../code/parameter/winEstGBM.R")
 source("../code/parameter/expEstGBM.R")
 
 # historical VaR/ES
+source("../code/stock/HVaR.R")
 
-getwd()
 # monte carlo VaR/ES
-source("../code/MCVAR & MCES.R")
+source("../code/stock/MCVAR & MCES.R")
+source("../code/option/Put_MCVaR.R")
 
 # Parametric VaR/ES
+source("../code/stock/gbmVaR.R")
+source("../code/stock/gbmES.R")
+source("../code/Portfolio/parametricVaR.R")
 ```
 
-Step 3: Plot results
+
 ```{r}
+price1 <- XOM$PX_LAST
+price2 <- INTC$PX_LAST
+dRtn <- 1
+year <- 5
+par1 <- winEstGBM(price1,dRtn,year)
+par2 <- winEstGBM(price1,dRtn,year)
 
-ll <- Monte_VaR(10000,m$mu_gbm,m$sigma_gbm,0.99,5/252,100)
+# historical VaR  #need to revise
+Hvar <- HVaR_S(price1,0.99)
+
+len <- min(length(par1),length(Hvar))
+
+date1=INTC$Dates[1:8371]
+plot(date1,Hvar[,1])
+
+# paramentric VaR
+Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)
+date1=INTC$Dates[1:8370]
+plot(date1,Gvar,type="l")
+
+# Monte Carlo VaR
+MVaR <- Monte_VaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1,1000)
+date1=INTC$Dates[1:8370]
+plot(date1,MVaR,type="l")
 
 
+# put optoin
+opvar <- Put_MCVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.01,17.67/100,2085.18,1,100,90,0.99,5,10)  # n?
+```
 
-plot(ll,type="l")
+
+Step 3: portfolio Analysis
+```{r}
+# component set in the portfolio
+ticker <- c("XOM","INTC")
+s_weight <- c("0.5","0.3")
+op_weight <- 1-sum(as.numeric(s_weight))
+
+#Construct Portfolio
+stock <- ticker*s_weight
+port <- stock+option*op_weight
+
+#MC VaR
+Put_MCVaR(s0, mu, sigma, rf, iv, strike, maturity, nstocks, 
+                      nputs, VaRp, horizon, npath){
+  
+                      }
+
 ```
 
 Step 4: Caculate Indicidual Stock
@@ -87,5 +133,48 @@ chartSeries(returns_AAPL)
 
 stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Close"], 
     GOOG = GOOG[, "GOOG.Close"]))
+```
+
+```{r}
+widlen <- 5 # years
+npts <- 252*widlen
+npaths <- 10000
+ntrials <- length(XOM)- npts  
+
+for (i in 1:ntrials){
+  
+}
+
+
+Monte_VaR <- function(s0, mu, sigma, p, t, npaths){
+  MCVaR <- NULL
+
+  widlen <- 5 # years
+  npts <- 252*widlen
+  npaths <- 10000
+  ntrials <- length(mu)-npts
+  p1 <- NA
+  
+  #t=horizon, 1,5,10days
+  
+  for (j in 1:length(ntrials)){
+    mc <- NULL
+    bm <- 
+    for (i in 1:npaths){
+      random <- rnorm(1,0,sqrt(t))
+      temp <- s0 - (s0 * exp((sigma[j] * sqrt(t)  * qnorm(1-p)) 
+                             + (mu[j]+random-sigma[j] ^ 2 / 2) * t))
+      mc <- c(mc, temp)
+    }
+    MCVaR <- c(MCVaR, quantile(mc, p, na.rm = TRUE))
+  }
+  return(MCVaR)
+}
+```
+
+```{r}
+# gbm sampleset
+# generate sample paths for specified GBM
+
 ```
 

@@ -40,3 +40,6 @@ Monte_ES <- function(s0, mu, sigma, p, t, npaths){
   }
   return(MCES)  
 }
+
+
+
