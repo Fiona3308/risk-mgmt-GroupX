@@ -2,16 +2,19 @@
 # s0: Initial portfolio value
 # mu: Drift
 # sigma: Volatility
-# p: 
+# p: probability of VaR
 # t: Default 5/252
 # npaths: 
 
 # MONTE CARLO
 Monte_VaR <- function(s0, mu, sigma, p, t, npaths){
   MCVaR <- NULL
-  len <- length(mu)
+  len <- length(mu) # number of dt( or trial)
+  # npts <- year*252
+  # len <- length(price)-npts
   for (j in 1:len){
     mc <- NULL
+    random <- NULL
     for (i in 1:npaths){
       random <- rnorm(1,0,sqrt(t))
       temp <- s0 - (s0 * exp((sigma[j] * sqrt(t)  * qnorm(1-p)) 
@@ -40,6 +43,5 @@ Monte_ES <- function(s0, mu, sigma, p, t, npaths){
   }
   return(MCES)  
 }
-
 
 

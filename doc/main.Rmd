@@ -35,22 +35,44 @@ source("../code/Portfolio/parametricVaR.R")
 
 
 ```{r}
+# create plot function for VaR
+plotGraph <- function(index,Dates){
+  # set up the length of two variable
+  if (class(index)=="data.frame"){
+    minlen <- min(nrow(index),length(Dates))
+    index <- index[1:minlen,]
+  }else{
+    minlen <- min(length(index),length(Dates))
+    length(index) <- minlen
+  }
+  Dates <- Dates[1:minlen]
+  
+  # create a dataframe
+  df <- cbind.data.frame(Dates,index)
+  # plot
+  ggplot()+
+  geom_line(aes(x=df$Dates,y=df$index,color="VaR"))
+}
+```
+
+
+
+```{r}
 price1 <- XOM$PX_LAST
 price2 <- INTC$PX_LAST
 dRtn <- 1
 year <- 5
 par1 <- winEstGBM(price1,dRtn,year)
-par2 <- winEstGBM(price1,dRtn,year)
+par2 <- winEstGBM(price2,dRtn,year)
 
-# historical VaR  #need to revise
+# historical VaR  
 Hvar <- HVaR_S(price1,0.99,dRtn,year)
-date1=INTC$Dates[1:8370]
-plot(date1,Hvar[,1])
+plotGraph(Hvar,INTC$Dates)
+
 
 # paramentric VaR
 Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)
-date1=INTC$Dates[1:8370]
-plot(date1,Gvar,type="l")
+plotGraph(Gvar,INTC$Dates)
 
 # Monte Carlo VaR
 MVaR <- Monte_VaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1,1000)
@@ -75,10 +97,6 @@ stock <- ticker*s_weight
 port <- stock+option*op_weight
 
 #MC VaR
-Put_MCVaR(s0, mu, sigma, rf, iv, strike, maturity, nstocks, 
-                      nputs, VaRp, horizon, npath){
-  
-                      }
 
 ```
 
@@ -89,7 +107,7 @@ source("../doc/calculation_measure.R")
 
 
 #########################################################
-Step:0 test
+Step:test part
 ```{r}
 # package to load stock price
 if (!require("quantmod")) {
@@ -109,16 +127,13 @@ start <- as.Date("2010-01-01")
 end <- as.Date("2018-10-01")
 
 getSymbols("AAPL", src = "yahoo", from = start, to = end)
+getSymbols(c("MSFT", "GOOG"), src = "yahoo", from = start, to = end)
 
 aple <- Ad(getSymbols("AAPL", src = "yahoo", auto.assign= F, from = start))
 intc <- Ad(getSymbols("INTC", src = "yahoo", auto.assign= F, from = start))
 
-head(aple)
-head(intc)
-
-plot(AAPL[, "AAPL.Close"], main = "AAPL")
-
-returns_AAPL <- Return.calculate(aaple, method=c("simple"))
+stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Close"], 
+    GOOG = GOOG[, "GOOG.Close"]))
 
 # useful in plot
 chartSeries(returns_AAPL)
@@ -126,52 +141,18 @@ chartSeries(returns_AAPL)
 ```
 
 ```{r}
- getSymbols(c("MSFT", "GOOG"), src = "yahoo", from = start, to = end)
+datadt <- 1/252
+rtn1 <- -diff(log(XOM$PX_LAST),1)
+rtn2 <- -diff(log(INTC$PX_LAST),1)
 
-stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Close"], 
-    GOOG = GOOG[, "GOOG.Close"]))
-```
+rtn1 <- rtn1[1:9000]
+rtn2 <- rtn2[1:9000]
+covbar <- cov(rtn1,rtn2)
 
-```{r}
-widlen <- 5 # years
-npts <- 252*widlen
-npaths <- 10000
-ntrials <- length(XOM)- npts  
+par1 <- par1[1:7700,]
+par2 <- par2[1:7700,]
 
-for (i in 1:ntrials){
-  
-}
-
-
-Monte_VaR <- function(s0, mu, sigma, p, t, npaths){
-  MCVaR <- NULL
-
-  widlen <- 5 # years
-  npts <- 252*widlen
-  npaths <- 10000
-  ntrials <- length(mu)-npts
-  p1 <- NA
-  
-  #t=horizon, 1,5,10days
-  
-  for (j in 1:length(ntrials)){
-    mc <- NULL
-    bm <- 
-    for (i in 1:npaths){
-      random <- rnorm(1,0,sqrt(t))
-      temp <- s0 - (s0 * exp((sigma[j] * sqrt(t)  * qnorm(1-p)) 
-                             + (mu[j]+random-sigma[j] ^ 2 / 2) * t))
-      mc <- c(mc, temp)
-    }
-    MCVaR <- c(MCVaR, quantile(mc, p, na.rm = TRUE))
-  }
-  return(MCVaR)
-}
-```
-
-```{r}
-# gbm sampleset
-# generate sample paths for specified GBM
-
+corr <- covbar/datadt/(par1$sigma_gbm*par2$sigma_gbm)
+View(corr)
 ```
 
