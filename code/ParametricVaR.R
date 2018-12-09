@@ -23,16 +23,16 @@
 # exp_vt2 = expected value of square of portfolio value at horizon
 # sdvt = standard deviation of portfolio values at horizon
 
-a <- c(N1,N2)  # if we only assign weights to each component of portfolio? how to decide position here?
-s0 <- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
-v0 <- T
-mu <- c(mu1,mu2)
-sigma <- c(sigma1,sigma2)
-datadt <- 1/252
-rtn1 <- -diff(log(s1),1)
-rtn2 <- -diff(log(s2),1)
-rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
-t <- 5/252 # horizon
+# a <- c(N1,N2)  # if we only assign weights to each component of portfolio? how to decide position here?
+# s0 <- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
+# v0 <- T
+# mu <- c(mu1,mu2)
+# sigma <- c(sigma1,sigma2)
+# datadt <- 1/252
+# rtn1 <- -diff(log(s1),1)
+# rtn2 <- -diff(log(s2),1)
+# rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
+# t <- 5/252 # horizon
 
 
 parametricVaR <- function(a,s0,mu,sigma,rho,p,t){
