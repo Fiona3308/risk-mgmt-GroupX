@@ -43,7 +43,7 @@ parametricVaR <- function(a,s0,mu,sigma,rho,p,t){
     value <- value+a[i]*s0[i]    # initial value of portfolio
   }
   
-  if (v0 == T){
+  if (v0 == T){  # should write outside the function in the main.rmd
     v0
   }else{
     v0 <- value

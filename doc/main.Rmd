@@ -56,7 +56,6 @@ plotGraph <- function(index,Dates){
 ```
 
 
-
 ```{r}
 price1 <- XOM$PX_LAST
 price2 <- INTC$PX_LAST
@@ -140,19 +139,4 @@ chartSeries(returns_AAPL)
 
 ```
 
-```{r}
-datadt <- 1/252
-rtn1 <- -diff(log(XOM$PX_LAST),1)
-rtn2 <- -diff(log(INTC$PX_LAST),1)
-
-rtn1 <- rtn1[1:9000]
-rtn2 <- rtn2[1:9000]
-covbar <- cov(rtn1,rtn2)
-
-par1 <- par1[1:7700,]
-par2 <- par2[1:7700,]
-
-corr <- covbar/datadt/(par1$sigma_gbm*par2$sigma_gbm)
-View(corr)
-```
 
