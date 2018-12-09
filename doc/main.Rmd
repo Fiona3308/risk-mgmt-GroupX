@@ -16,15 +16,18 @@ INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 
 Step 2: Source function and fiels 
 ```{r}
+library(ggplot2)
 # calculate parameter for return
 source("../code/parameter/winEstGBM.R")
 source("../code/parameter/expEstGBM.R")
 
 # historical VaR/ES
 source("../code/stock/HVaR.R")
+source("../code/stock/HES.R")
 
 # monte carlo VaR/ES
 source("../code/stock/MCVAR & MCES.R")
+source("../code/stock/MC_update.R")
 source("../code/option/Put_MCVaR.R")
 
 # Parametric VaR/ES
@@ -73,10 +76,10 @@ plotGraph(Hvar,INTC$Dates)
 Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)
 plotGraph(Gvar,INTC$Dates)
 
+
 # Monte Carlo VaR
-MVaR <- Monte_VaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1,1000)
-date1=INTC$Dates[1:8370]
-plot(date1,MVaR,type="l")
+MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
+plotGraph(MVaR,INTC$Dates)
 
 
 # put optoin
