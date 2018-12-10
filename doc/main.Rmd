@@ -28,7 +28,7 @@ source("../code/stock/HES.R")
 # monte carlo VaR/ES
 source("../code/stock/MCVAR & MCES.R")
 source("../code/stock/MC_update.R")
-source("../code/MC_complicate.R")
+source("../code/MC_complicate.R") #inlcuding complicate inputs (bmsampset,tv)
 
 source("../code/Put_MCVaR.R")
 
@@ -88,6 +88,7 @@ plotGraph(Gvar,INTC$Dates)
 # Monte Carlo VaR
 MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
 plotGraph(MVaR,INTC$Dates)
+
 
 #### Portfolio ####
 # Parametric VaR (portfolio follow Normal Distribution)
