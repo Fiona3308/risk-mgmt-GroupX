@@ -28,6 +28,8 @@ source("../code/stock/HES.R")
 # monte carlo VaR/ES
 source("../code/stock/MCVAR & MCES.R")
 source("../code/stock/MC_update.R")
+source("../code/MC_complicate.R")
+
 source("../code/Put_MCVaR.R")
 
 # Parametric VaR/ES
@@ -54,6 +56,7 @@ plotGraph <- function(index,Dates){
   
   # create a dataframe
   df <- cbind.data.frame(Dates,index)
+  
   # plot
   ggplot()+
   geom_line(aes(x=df$Dates,y=df$index,color="VaR"))
@@ -74,6 +77,8 @@ par2 <- winEstGBM(price2,dRtn,year)
 Hvar <- HVaR_S(price1,0.99,dRtn,year)
 plotGraph(Hvar,INTC$Dates)
 
+plot(Hvar$Hvar)
+hist(-diff(log(price1)))
 
 # paramentric VaR
 Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)

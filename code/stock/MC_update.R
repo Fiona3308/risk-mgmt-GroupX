@@ -7,13 +7,15 @@
 # t: Default 5/252
 # npaths: number of paths to generate bm
 
+# only did one time step here in monte carlo simulation of GBM
+
 MCVaR <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   
   dRtn <- 5
   s0 <- 10000
   horizon <- dRtn/252
   p <- 0.99
-  years <- 5 # years
+  years <- 5 
   npts <- 252*years
   npaths <- 10000
   ntrials <- length(mu) 
@@ -26,9 +28,8 @@ MCVaR <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   for (i in 1:ntrials){
     n <- 1
     dt <- dRtn/252
-    # tv <- sample(0,n*dt,dt)
     w <- sqrt(dt)*rnorm(npaths,0,1)
-    # w <- cbind(0,w)
+
     st_bm[i,] <- c(s0*exp(sigma[i]*w+(mu[i]-sigma[i]^2/2)*dt))
     MCVaR[i] <- s0-quantile(st_bm[i,],1-p)
   }
@@ -42,7 +43,7 @@ MCES <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   s0 <- 10000
   horizon <- dRtn/252
   p <- 0.99
-  years <- 5 # years
+  years <- 5 
   npts <- 252*years
   npaths <- 10000
   ntrials <- length(mu) 
@@ -56,9 +57,8 @@ MCES <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   for (i in 1:ntrials){
     n <- 1
     dt <- dRtn/252
-    # tv <- sample(0,n*dt,dt)
     w <- sqrt(dt)*rnorm(npaths,0,1)
-    # w <- cbind(0,w)
+
     st_bm[i,] <- c(s0*exp(sigma[i]*w+(mu[i]-sigma[i]^2/2)*dt))
     loss_point[i]<-quantile(st_bm[i,],1-p)
     
@@ -67,5 +67,3 @@ MCES <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   return(MCES)
 }
 
-# plot(MCES,type = "l")
-# plot(MCVaR,type = "l")
