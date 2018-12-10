@@ -28,8 +28,6 @@ source("../code/stock/HES.R")
 # monte carlo VaR/ES
 source("../code/stock/MCVAR & MCES.R")
 source("../code/stock/MC_update.R")
-source("../code/MC_complicate.R") #inlcuding complicate inputs (bmsampset,tv)
-
 source("../code/Put_MCVaR.R")
 
 # Parametric VaR/ES
@@ -56,7 +54,6 @@ plotGraph <- function(index,Dates){
   
   # create a dataframe
   df <- cbind.data.frame(Dates,index)
-  
   # plot
   ggplot()+
   geom_line(aes(x=df$Dates,y=df$index,color="VaR"))
@@ -77,8 +74,6 @@ par2 <- winEstGBM(price2,dRtn,year)
 Hvar <- HVaR_S(price1,0.99,dRtn,year)
 plotGraph(Hvar,INTC$Dates)
 
-plot(Hvar$Hvar)
-hist(-diff(log(price1)))
 
 # paramentric VaR
 Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)
@@ -88,7 +83,6 @@ plotGraph(Gvar,INTC$Dates)
 # Monte Carlo VaR
 MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
 plotGraph(MVaR,INTC$Dates)
-
 
 #### Portfolio ####
 # Parametric VaR (portfolio follow Normal Distribution)
@@ -101,6 +95,13 @@ mu2 <- par2$mu_gbm[1:7000]
 sigma1 <- par1$sigma_gbm[1:7000]
 sigma2 <- par2$sigma_gbm[1:7000]
 a <- c(156,200)  # if we only assign weights to each component of portfolio? how to decide position here?
+p_price <- cbind(s1,s2)
+portfolio_price <- rep(0,length(mu1))
+  for (i in 1:length(portfolio_price)){
+    for (j in 1:length(a)){
+      portfolio_price[i] <- a[j]*p_price[i,j]
+    }
+  }
 s0 <- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
 v0 = FALSE
 mu <- c(mu1,mu2)
@@ -114,9 +115,13 @@ rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
 t <- 5/252
 p <- 0.99
 
+# paramentric VaR
 PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t)
 plotGraph(Gvar,INTC$Dates)
 
+# historical VaR  
+port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year)
+plotGraph(port_Hvar,INTC$Dates)
 
 # put optoin
 # opvar <- Put_MCVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.01,17.67/100,2085.18,1,100,90,0.99,5,10)  # n?
