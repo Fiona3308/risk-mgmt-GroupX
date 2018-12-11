@@ -1,3 +1,5 @@
+#Assume Portfolio follows GBM
+
 # Since we know the distribution of GBM at the terminal time, 
 # We don't need intermediate values of the portfolio, 
 # we can do the stock simulatoin with just 1 time step. 
