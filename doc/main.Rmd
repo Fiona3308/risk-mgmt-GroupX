@@ -26,7 +26,7 @@ source("../code/stock/HVaR.R")
 source("../code/stock/HES.R")
 
 # monte carlo VaR/ES
-source("../code/stock/MCVAR & MCES.R")
+# source("../code/stock/MCVAR & MCES.R")
 source("../code/stock/MC_update.R")
 source("../code/Put_MCVaR.R")
 
@@ -36,58 +36,44 @@ source("../code/stock/gbmES.R")
 source("../code/parametricVaR.R")
 
 source("../doc/calculation_measure.R")
+
+# plot graph
+source("../code/plotGraph.R")
 ```
 
 
 ```{r}
-# create plot function for VaR
-plotGraph <- function(index,Dates){
-  # set up the length of two variable
-  if (class(index)=="data.frame"){
-    minlen <- min(nrow(index),length(Dates))
-    index <- index[1:minlen,]
-  }else{
-    minlen <- min(length(index),length(Dates))
-    length(index) <- minlen
-  }
-  Dates <- Dates[1:minlen]
-  
-  # create a dataframe
-  df <- cbind.data.frame(Dates,index)
-  # plot
-  ggplot()+
-  geom_line(aes(x=df$Dates,y=df$index,color="VaR"))
-}
-```
-
-
-```{r}
-price1 <- XOM$PX_LAST
-price2 <- INTC$PX_LAST
+#price1 <- XOM$PX_LAST
+#price2 <- INTC$PX_LAST
+s1 <- XOM$PX_LAST
+s2 <- INTC$PX_LAST
 dRtn <- 1
 year <- 5
-par1 <- winEstGBM(price1,dRtn,year)
-par2 <- winEstGBM(price2,dRtn,year)
+par1 <- winEstGBM(s1,dRtn,year)
+par2 <- winEstGBM(s2,dRtn,year)
+s0<-10000
 
-#### Individual Stocks ####
+#### Individual Stock ####
 # historical VaR  
-Hvar <- HVaR_S(price1,0.99,dRtn,year)
-plotGraph(Hvar,INTC$Dates)
+Hvar <- HVaR_S(s1,0.99,dRtn,year)
+plotGraph(Hvar,XOM$Dates)
 
 
 # paramentric VaR
-Gvar <- gbmVaR(10000,par1$mu_gbm,par1$sigma_gbm,0.99,1)
-plotGraph(Gvar,INTC$Dates)
+Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,1)
+plotGraph(Gvar,XOM$Dates)
 
 
 # Monte Carlo VaR
 MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
-plotGraph(MVaR,INTC$Dates)
+plotGraph(MVaR,XOM$Dates)
+```
 
+```{r}
 #### Portfolio ####
 # Parametric VaR (portfolio follow Normal Distribution)
-s1 <- XOM$PX_LAST
-s2 <- INTC$PX_LAST
+#s1 <- XOM$PX_LAST
+#s2 <- INTC$PX_LAST
 s1_0 <- 32.0625 #XOM
 s2_0 <- 25.0156 #INTC
 mu1 <- par1$mu_gbm[1:7000]
@@ -129,22 +115,6 @@ plotGraph(port_Hvar,INTC$Dates)
 
 
 #################################### Don't Run Below Parts #################
-Step 3: portfolio Analysis
-```{r}
-# component set in the portfolio
-ticker <- c("XOM","INTC")
-s_weight <- c("0.5","0.3")
-op_weight <- 1-sum(as.numeric(s_weight))
-
-#Construct Portfolio
-stock <- ticker*s_weight
-port <- stock+option*op_weight
-
-#MC VaR
-
-```
-
-
 
 #########################################################
 Step:test part
