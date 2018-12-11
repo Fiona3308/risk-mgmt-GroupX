@@ -7,12 +7,14 @@ comb.col <- function(dat1, dat2) {
   length(dat2) <- n.row
   cbind(dat1, dat2)
 }
+
 portfolio_px <- function(prices,wgts,positions){
   port_px <- NA
-  n_s <- 2 # number of stocks in portfolio
-  for(i in (n_s+1):length(positions)){
+  for(i in 1:length(positions)){
       if (positions[i] == "long"){
         wgts[i] <- (-1)*wgts[i]
+      }else{
+    wgts[i]
   }
   for(j in 1:nrow(prices)){
     port_px[j] <- sum(prices[j,]*wgts)

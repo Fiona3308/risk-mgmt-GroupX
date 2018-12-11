@@ -36,18 +36,3 @@ HVaR_S <- function(price,p,dRtn,year,v0){
 #   return(as.data.frame(Hvar))
 # }
 # 
-# #####################################################33
-# 
-# dRtn <- -diff(log(XOM$PX_LAST),5)
-# 
-# rtn <- c()
-# for (i in 1:length(XOM$PX_LAST)){
-#   logr <- log(XOM$PX_LAST)
-#   rtn[i] <- logr[i]-logr[i+4]
-# }
-# 
-# View(rtn)
-# 
-# 
-# m <- c(1,3,5,6,7)
-# -diff(m)
