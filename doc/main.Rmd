@@ -9,9 +9,11 @@ Step 1: Load Data
 ```{r}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
 INTC <- read.csv("../data/INTC-bloomberg.csv")
+imp_vol <- read.csv("../data/volatility.csv")
 
 XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
 INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
+imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
 Step 2: Source function and fiels 
@@ -103,21 +105,47 @@ p <- 0.99
 # paramentric VaR
 PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t)
 plotGraph(Gvar,INTC$Dates)
-
 ```
-
 
 
 ```{r}
 # Portfolio Historical VaR #
+# portfilio only include stock prices
 source("../code/portfolio_price.R")
 prices <- comb.col(XOM$PX_LAST,INTC$PX_LAST)
 wgt <- c(156/(156+200),200/(156+200))
 positions <- c("no","no") #stock postion is "no" means no inverse transfer to weight signs
+
 portfolio_price <- portfolio_px(prices,wgt,positions)
 port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,s0)
 plotGraph(port_Hvar,INTC$Dates)
 ```
+
+```{r}
+# portfolio includes stock + option
+add.col<-function(df, new.col) {
+  n.row<-dim(df)[1]
+  length(new.col)<-n.row
+  cbind(df, new.col)
+}
+
+colnames(imp_vol) <- c("Dates","PX","IMP_VOL")
+
+imp_vol$Dates <- format(time(imp_vol$Dates))
+INTC$Dates <- format(time(INTC$Dates))
+
+merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
+
+```
+
+
+
+
+
+
+
+
+
 
 
 ############################## Don't Run Below Parts #######################
