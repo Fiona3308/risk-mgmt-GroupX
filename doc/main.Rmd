@@ -5,6 +5,10 @@ output: html_notebook
 
 
 Step 1: Load Data
+```{r,message=FALSE}
+library(ggplot2)
+library(quantmod)
+```
 
 ```{r}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
@@ -18,7 +22,6 @@ imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 
 Step 2: Source function and fiels 
 ```{r}
-library(ggplot2)
 # calculate parameter for return
 source("../code/parameter/winEstGBM.R")
 source("../code/parameter/expEstGBM.R")
@@ -42,7 +45,8 @@ source("../doc/calculation_measure.R")
 source("../code/plotGraph.R")
 ```
 
-
+Step 3: Individual Stock Analysis
+#### 3.0: Prepara Inputs
 ```{r}
 #price1 <- XOM$PX_LAST
 #price2 <- INTC$PX_LAST
@@ -53,8 +57,10 @@ year <- 5
 par1 <- winEstGBM(s1,dRtn,year)
 par2 <- winEstGBM(s2,dRtn,year)
 s0<-10000
+```
 
-#### Individual Stock ####
+#### 3.1: Calculate Stock VaR
+```{r}
 # historical VaR  
 Hvar <- HVaR_S(s1,0.99,dRtn,year,s0)
 plotGraph(Hvar,XOM$Dates)
@@ -70,8 +76,10 @@ MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
 plotGraph(MVaR,XOM$Dates)
 ```
 
+
+Step 4: Portfolio Analysis
+#### 4.0: Prepare Inputs
 ```{r}
-#### Portfolio ####
 # Parametric VaR (portfolio follow Normal Distribution)
 #s1 <- XOM$PX_LAST
 #s2 <- INTC$PX_LAST
@@ -101,26 +109,43 @@ rtn2 <- rtn2[1:7000]
 rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
 t <- 5/252
 p <- 0.99
-
-# paramentric VaR
-PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t)
-plotGraph(Gvar,INTC$Dates)
 ```
 
-
+#### 4.1: Calculate Portfolio VaR
+##### 4.1.1: Portfolio only includes stocks
 ```{r}
-# Portfolio Historical VaR #
-# portfilio only include stock prices
+# part1: portfolio = weight1*s1+weight2*s2
+# Inputs Preparation
 source("../code/portfolio_price.R")
+
 prices <- comb.col(XOM$PX_LAST,INTC$PX_LAST)
 wgt <- c(156/(156+200),200/(156+200))
-positions <- c("no","no") #stock postion is "no" means no inverse transfer to weight signs
+positions <- c("long","long") 
 
-portfolio_price <- portfolio_px(prices,wgt,positions)
-port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,s0)
-plotGraph(port_Hvar,INTC$Dates)
+dRtn <- 5
+year <- 5
+v0 <- 10000
+
+portfolio_price <- portfolio_px(prices,wgt,positions,v0)
+par_p <- winEstGBM(portfolio_price,dRtn,year)
 ```
 
+```{r}
+# Historical VaR 
+port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,v0)
+plotGraph(port_Hvar,INTC$Dates)
+
+# Parametric VaR portfolio follows GBM
+Gvar <- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,0.99,dRtn)
+plotGraph(Gvar,INTC$Dates)
+
+# Parametric VaR underlying follows 
+PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t)
+plotGraph(PVaR,INTC$Dates)
+```
+
+
+##### 4.1.2: Portfolio includes stocks and options
 ```{r}
 # portfolio includes stock + option
 add.col<-function(df, new.col) {
