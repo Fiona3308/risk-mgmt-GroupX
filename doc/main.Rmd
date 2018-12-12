@@ -4,10 +4,14 @@ output: html_notebook
 ---
 
 
-Step 1: Load Data
+### Step 1: Load Data
 ```{r,message=FALSE}
 library(ggplot2)
 library(quantmod)
+if (!require("quantmod")) {
+    install.packages("quantmod")
+    library(quantmod)
+}
 ```
 
 ```{r}
@@ -20,7 +24,7 @@ INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
-Step 2: Source function and fiels 
+### Step 2: Source function and fiels 
 ```{r}
 # calculate parameter for return
 source("../code/parameter/winEstGBM.R")
@@ -45,21 +49,21 @@ source("../doc/calculation_measure.R")
 source("../code/plotGraph.R")
 ```
 
-Step 3: Individual Stock Analysis
-#### 3.0: Prepara Inputs
+
+### Step 3: Individual Stock Analysis
+
+#### 3.0: Prepare Inputs
 ```{r}
-#price1 <- XOM$PX_LAST
-#price2 <- INTC$PX_LAST
 s1 <- XOM$PX_LAST
 s2 <- INTC$PX_LAST
 dRtn <- 5
 year <- 5
 par1 <- winEstGBM(s1,dRtn,year)
 par2 <- winEstGBM(s2,dRtn,year)
-s0<-10000
+s0 <- 10000
 ```
 
-#### 3.1: Calculate Stock VaR
+#### 3.1: Calculate Individual Stock VaR
 ```{r}
 # historical VaR  
 Hvar <- HVaR_S(s1,0.99,dRtn,year,s0)
@@ -77,44 +81,11 @@ plotGraph(MVaR,XOM$Dates)
 ```
 
 
-Step 4: Portfolio Analysis
-#### 4.0: Prepare Inputs
-```{r}
-# Parametric VaR (portfolio follow Normal Distribution)
-#s1 <- XOM$PX_LAST
-#s2 <- INTC$PX_LAST
-s1_0 <- 32.0625 #XOM
-s2_0 <- 25.0156 #INTC
-mu1 <- par1$mu_gbm[1:7000]
-mu2 <- par2$mu_gbm[1:7000]
-sigma1 <- par1$sigma_gbm[1:7000]
-sigma2 <- par2$sigma_gbm[1:7000]
-a <- c(156,200)  # if we only assign weights to each component of portfolio? how to decide position here?
-p_price <- cbind(s1,s2)
-portfolio_price <- rep(0,length(mu1))
-  for (i in 1:length(portfolio_price)){
-    for (j in 1:length(a)){
-      portfolio_price[i] <- a[j]*p_price[i,j]
-    }
-  }
-s0 <- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
-v0 = FALSE
-mu <- c(mu1,mu2)
-sigma <- c(sigma1,sigma2)
-datadt <- 1/252
-rtn1 <- -diff(log(s1),1)
-rtn2 <- -diff(log(s2),1)
-rtn1 <- rtn1[1:7000]
-rtn2 <- rtn2[1:7000]
-rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
-t <- 5/252
-p <- 0.99
-```
+### Step 4: Portfolio Analysis
 
-#### 4.1: Calculate Portfolio VaR
-##### 4.1.1: Portfolio only includes stocks
+#### 4.1: Part 1: Portfolio = weight1*s1 + weight2*s2
+##### 4.1.1: Prepare Inputs
 ```{r}
-# part1: portfolio = weight1*s1+weight2*s2
 # Inputs Preparation
 source("../code/portfolio_price.R")
 
@@ -130,6 +101,7 @@ portfolio_price <- portfolio_px(prices,wgt,positions,v0)
 par_p <- winEstGBM(portfolio_price,dRtn,year)
 ```
 
+##### 4.1.2: Calculate Portfolio VaR
 ```{r}
 # Historical VaR 
 port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,v0)
@@ -139,15 +111,16 @@ plotGraph(port_Hvar,INTC$Dates)
 Gvar <- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,INTC$Dates)
 
-# Parametric VaR underlying follows 
-PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t)
+# Parametric VaR underlying follows GBM
+#-- need to revise all code in this part including inputs --#
+source("../doc/loadInput.R")
+PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t,v0)
 plotGraph(PVaR,INTC$Dates)
 ```
 
 
-##### 4.1.2: Portfolio includes stocks and options
+#### 4.2: Part 2: Portfolio = Stocks + Options
 ```{r}
-# portfolio includes stock + option
 add.col<-function(df, new.col) {
   n.row<-dim(df)[1]
   length(new.col)<-n.row
@@ -163,6 +136,12 @@ merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
 
 ```
 
+```{r}
+# Inputs Preparation
+
+
+
+```
 
 
 
@@ -177,19 +156,6 @@ merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
 
 #########################################################
 Step:test part
-```{r}
-# package to load stock price
-if (!require("quantmod")) {
-    install.packages("quantmod")
-    library(quantmod)
-}
-# Get me my beloved pipe operator!
-if (!require("magrittr")) {
-    install.packages("magrittr")
-    library(magrittr)
-}
-```
-
 ```{r}
 # one approach to load stock dataset
 start <- as.Date("2010-01-01")

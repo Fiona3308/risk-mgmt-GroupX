@@ -35,19 +35,19 @@
 # t <- 5/252 # horizon
 
 
-parametricVaR <- function(a,s0,mu,sigma,rho,p,t){
+parametricVaR <- function(a,s0,mu,sigma,rho,p,t,v0){
   
-  # v0
-  value <- 0 
-  for (i in 1:length(a)){
-    value <- value+a[i]*s0[i]    # initial value of portfolio
-  }
-  
-  if (v0 == T){  # should write outside the function in the main.rmd
-    v0
-  }else{
-    v0 <- value
-  }
+  # # v0
+  # value <- 0 
+  # for (i in 1:length(a)){
+  #   value <- value+a[i]*s0[i]    # initial value of portfolio
+  # }
+  # 
+  # if (v0 == T){  # should write outside the function in the main.rmd
+  #   v0
+  # }else{
+  #   v0 <- value
+  # }
   
   # E[vt]
   exp_vt <- 0

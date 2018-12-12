@@ -173,7 +173,8 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>Step 1: Load Data</p>
+<div id="step-1-load-data" class="section level3">
+<h3>Step 1: Load Data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShxdWFudG1vZClcbmBgYCJ9 -->
@@ -194,52 +195,53 @@ imp_vol$Date &lt;- as.Date(imp_vol$Date,&quot;%m/%d/%Y&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Step 2: Source function and fiels</p>
+</div>
+<div id="step-2-source-function-and-fiels" class="section level3">
+<h3>Step 2: Source function and fiels</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxhdGUgcGFyYW1ldGVyIGZvciByZXR1cm5cbnNvdXJjZShcIi4uL2NvZGUvcGFyYW1ldGVyL3dpbkVzdEdCTS5SXCIpXG5zb3VyY2UoXCIuLi9jb2RlL3BhcmFtZXRlci9leHBFc3RHQk0uUlwiKVxuXG4jIGhpc3RvcmljYWwgVmFSL0VTXG5zb3VyY2UoXCIuLi9jb2RlL3N0b2NrL0hWYVIuUlwiKVxuc291cmNlKFwiLi4vY29kZS9zdG9jay9IRVMuUlwiKVxuXG4jIG1vbnRlIGNhcmxvIFZhUi9FU1xuIyBzb3VyY2UoXCIuLi9jb2RlL3N0b2NrL01DVkFSICYgTUNFUy5SXCIpXG5zb3VyY2UoXCIuLi9jb2RlL3N0b2NrL01DX3VwZGF0ZS5SXCIpXG5zb3VyY2UoXCIuLi9jb2RlL1B1dF9NQ1ZhUi5SXCIpXG5cbiMgUGFyYW1ldHJpYyBWYVIvRVNcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svZ2JtVmFSLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svZ2JtRVMuUlwiKVxuc291cmNlKFwiLi4vY29kZS9wYXJhbWV0cmljVmFSLlJcIilcbnNvdXJjZShcIi4uL2RvYy9jYWxjdWxhdGlvbl9tZWFzdXJlLlJcIilcblxuIyBwbG90IGdyYXBoXG5zb3VyY2UoXCIuLi9jb2RlL3Bsb3RHcmFwaC5SXCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxhdGUgcGFyYW1ldGVyIGZvciByZXR1cm5cbnNvdXJjZShcIi4uL2NvZGUvcGFyYW1ldGVyL3dpbkVzdEdCTS5SXCIpXG5zb3VyY2UoXCIuLi9jb2RlL3BhcmFtZXRlci9leHBFc3RHQk0uUlwiKVxuIyBoaXN0b3JpY2FsIFZhUi9FU1xuc291cmNlKFwiLi4vY29kZS9zdG9jay9IVmFSLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svSEVTLlJcIilcbiMgbW9udGUgY2FybG8gVmFSL0VTXG4jIHNvdXJjZShcIi4uL2NvZGUvc3RvY2svTUNWQVIgJiBNQ0VTLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svTUNfdXBkYXRlLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvUHV0X01DVmFSLlJcIilcbiMgUGFyYW1ldHJpYyBWYVIvRVNcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svZ2JtVmFSLlJcIilcbnNvdXJjZShcIi4uL2NvZGUvc3RvY2svZ2JtRVMuUlwiKVxuc291cmNlKFwiLi4vY29kZS9wYXJhbWV0cmljVmFSLlJcIilcbnNvdXJjZShcIi4uL2RvYy9jYWxjdWxhdGlvbl9tZWFzdXJlLlJcIilcbiMgcGxvdCBncmFwaFxuc291cmNlKFwiLi4vY29kZS9wbG90R3JhcGguUlwiKVxuYGBgIn0= -->
 <pre class="r"><code># calculate parameter for return
 source(&quot;../code/parameter/winEstGBM.R&quot;)
 source(&quot;../code/parameter/expEstGBM.R&quot;)
-
 # historical VaR/ES
 source(&quot;../code/stock/HVaR.R&quot;)
 source(&quot;../code/stock/HES.R&quot;)
-
 # monte carlo VaR/ES
 # source(&quot;../code/stock/MCVAR &amp; MCES.R&quot;)
 source(&quot;../code/stock/MC_update.R&quot;)
 source(&quot;../code/Put_MCVaR.R&quot;)
-
 # Parametric VaR/ES
 source(&quot;../code/stock/gbmVaR.R&quot;)
 source(&quot;../code/stock/gbmES.R&quot;)
 source(&quot;../code/parametricVaR.R&quot;)
 source(&quot;../doc/calculation_measure.R&quot;)
-
 # plot graph
 source(&quot;../code/plotGraph.R&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Step 3: Individual Stock Analysis #### 3.0: Prepara Inputs</p>
+</div>
+<div id="step-3-individual-stock-analysis" class="section level3">
+<h3>Step 3: Individual Stock Analysis</h3>
+<div id="prepare-inputs" class="section level4">
+<h4>3.0: Prepare Inputs</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3ByaWNlMSA8LSBYT00kUFhfTEFTVFxuI3ByaWNlMiA8LSBJTlRDJFBYX0xBU1RcbnMxIDwtIFhPTSRQWF9MQVNUXG5zMiA8LSBJTlRDJFBYX0xBU1RcbmRSdG4gPC0gNVxueWVhciA8LSA1XG5wYXIxIDwtIHdpbkVzdEdCTShzMSxkUnRuLHllYXIpXG5wYXIyIDwtIHdpbkVzdEdCTShzMixkUnRuLHllYXIpXG5zMDwtMTAwMDBcbmBgYCJ9 -->
-<pre class="r"><code>#price1 &lt;- XOM$PX_LAST
-#price2 &lt;- INTC$PX_LAST
-s1 &lt;- XOM$PX_LAST
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuczEgPC0gWE9NJFBYX0xBU1RcbnMyIDwtIElOVEMkUFhfTEFTVFxuZFJ0biA8LSA1XG55ZWFyIDwtIDVcbnBhcjEgPC0gd2luRXN0R0JNKHMxLGRSdG4seWVhcilcbnBhcjIgPC0gd2luRXN0R0JNKHMyLGRSdG4seWVhcilcbnMwIDwtIDEwMDAwXG5gYGAifQ== -->
+<pre class="r"><code>s1 &lt;- XOM$PX_LAST
 s2 &lt;- INTC$PX_LAST
 dRtn &lt;- 5
 year &lt;- 5
 par1 &lt;- winEstGBM(s1,dRtn,year)
 par2 &lt;- winEstGBM(s2,dRtn,year)
-s0&lt;-10000</code></pre>
+s0 &lt;- 10000</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="calculate-stock-var" class="section level4">
-<h4>3.1: Calculate Stock VaR</h4>
+</div>
+<div id="calculate-individual-stock-var" class="section level4">
+<h4>3.1: Calculate Individual Stock VaR</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBoaXN0b3JpY2FsIFZhUiAgXG5IdmFyIDwtIEhWYVJfUyhzMSwwLjk5LGRSdG4seWVhcixzMClcbnBsb3RHcmFwaChIdmFyLFhPTSREYXRlcylcblxuXG4jIHBhcmFtZW50cmljIFZhUlxuR3ZhciA8LSBnYm1WYVIoczAscGFyMSRtdV9nYm0scGFyMSRzaWdtYV9nYm0sMC45OSxkUnRuKVxucGxvdEdyYXBoKEd2YXIsWE9NJERhdGVzKVxuXG5cbiMgTW9udGUgQ2FybG8gVmFSXG5NVmFSIDwtIE1DVmFSKHMwLCBwYXIxJG11X2dibSwgcGFyMSRzaWdtYV9nYm0sIHAsIGR0LCBucGF0aHMseWVhcnMsZFJ0bilcbnBsb3RHcmFwaChNVmFSLFhPTSREYXRlcylcbmBgYCJ9 -->
@@ -259,52 +261,18 @@ plotGraph(MVaR,XOM$Dates)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Step 4: Portfolio Analysis #### 4.0: Prepare Inputs</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQYXJhbWV0cmljIFZhUiAocG9ydGZvbGlvIGZvbGxvdyBOb3JtYWwgRGlzdHJpYnV0aW9uKVxuI3MxIDwtIFhPTSRQWF9MQVNUXG4jczIgPC0gSU5UQyRQWF9MQVNUXG5zMV8wIDwtIDMyLjA2MjUgI1hPTVxuczJfMCA8LSAyNS4wMTU2ICNJTlRDXG5tdTEgPC0gcGFyMSRtdV9nYm1bMTo3MDAwXVxubXUyIDwtIHBhcjIkbXVfZ2JtWzE6NzAwMF1cbnNpZ21hMSA8LSBwYXIxJHNpZ21hX2dibVsxOjcwMDBdXG5zaWdtYTIgPC0gcGFyMiRzaWdtYV9nYm1bMTo3MDAwXVxuYSA8LSBjKDE1NiwyMDApICAjIGlmIHdlIG9ubHkgYXNzaWduIHdlaWdodHMgdG8gZWFjaCBjb21wb25lbnQgb2YgcG9ydGZvbGlvPyBob3cgdG8gZGVjaWRlIHBvc2l0aW9uIGhlcmU/XG5wX3ByaWNlIDwtIGNiaW5kKHMxLHMyKVxucG9ydGZvbGlvX3ByaWNlIDwtIHJlcCgwLGxlbmd0aChtdTEpKVxuICBmb3IgKGkgaW4gMTpsZW5ndGgocG9ydGZvbGlvX3ByaWNlKSl7XG4gICAgZm9yIChqIGluIDE6bGVuZ3RoKGEpKXtcbiAgICAgIHBvcnRmb2xpb19wcmljZVtpXSA8LSBhW2pdKnBfcHJpY2VbaSxqXVxuICAgIH1cbiAgfVxuczAgPC0gYyhzMV8wLHMyXzApICAjIHdoYXQncyBzMV8wIGFuZCBzMl8wIGhlcmUsIGlzIHRoZSBkYWlsdHkgc3RvY2sgcHJpY2U/XG52MCA9IEZBTFNFXG5tdSA8LSBjKG11MSxtdTIpXG5zaWdtYSA8LSBjKHNpZ21hMSxzaWdtYTIpXG5kYXRhZHQgPC0gMS8yNTJcbnJ0bjEgPC0gLWRpZmYobG9nKHMxKSwxKVxucnRuMiA8LSAtZGlmZihsb2coczIpLDEpXG5ydG4xIDwtIHJ0bjFbMTo3MDAwXVxucnRuMiA8LSBydG4yWzE6NzAwMF1cbnJobyA8LSBjb3YocnRuMSxydG4yKS9kYXRhZHQvKHNpZ21hMSpzaWdtYTIpXG50IDwtIDUvMjUyXG5wIDwtIDAuOTlcbmBgYCJ9 -->
-<pre class="r"><code># Parametric VaR (portfolio follow Normal Distribution)
-#s1 &lt;- XOM$PX_LAST
-#s2 &lt;- INTC$PX_LAST
-s1_0 &lt;- 32.0625 #XOM
-s2_0 &lt;- 25.0156 #INTC
-mu1 &lt;- par1$mu_gbm[1:7000]
-mu2 &lt;- par2$mu_gbm[1:7000]
-sigma1 &lt;- par1$sigma_gbm[1:7000]
-sigma2 &lt;- par2$sigma_gbm[1:7000]
-a &lt;- c(156,200)  # if we only assign weights to each component of portfolio? how to decide position here?
-p_price &lt;- cbind(s1,s2)
-portfolio_price &lt;- rep(0,length(mu1))
-  for (i in 1:length(portfolio_price)){
-    for (j in 1:length(a)){
-      portfolio_price[i] &lt;- a[j]*p_price[i,j]
-    }
-  }
-s0 &lt;- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
-v0 = FALSE
-mu &lt;- c(mu1,mu2)
-sigma &lt;- c(sigma1,sigma2)
-datadt &lt;- 1/252
-rtn1 &lt;- -diff(log(s1),1)
-rtn2 &lt;- -diff(log(s2),1)
-rtn1 &lt;- rtn1[1:7000]
-rtn2 &lt;- rtn2[1:7000]
-rho &lt;- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
-t &lt;- 5/252
-p &lt;- 0.99</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
 </div>
-<div id="calculate-portfolio-var" class="section level4">
-<h4>4.1: Calculate Portfolio VaR</h4>
-<div id="portfolio-only-includes-stocks" class="section level5">
-<h5>4.1.1: Portfolio only includes stocks</h5>
+</div>
+<div id="step-4-portfolio-analysis" class="section level3">
+<h3>Step 4: Portfolio Analysis</h3>
+<div id="part-1-portfolio-weight1s1-weight2s2" class="section level4">
+<h4>4.1: Part 1: Portfolio = weight1<em>s1 + weight2</em>s2</h4>
+<div id="prepare-inputs-1" class="section level5">
+<h5>4.1.1: Prepare Inputs</h5>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYXJ0MTogcG9ydGZvbGlvID0gd2VpZ2h0MSpzMSt3ZWlnaHQyKnMyXG4jIElucHV0cyBQcmVwYXJhdGlvblxuc291cmNlKFwiLi4vY29kZS9wb3J0Zm9saW9fcHJpY2UuUlwiKVxuXG5wcmljZXMgPC0gY29tYi5jb2woWE9NJFBYX0xBU1QsSU5UQyRQWF9MQVNUKVxud2d0IDwtIGMoMTU2LygxNTYrMjAwKSwyMDAvKDE1NisyMDApKVxucG9zaXRpb25zIDwtIGMoXCJsb25nXCIsXCJsb25nXCIpIFxuXG5kUnRuIDwtIDVcbnllYXIgPC0gNVxudjAgPC0gMTAwMDBcblxucG9ydGZvbGlvX3ByaWNlIDwtIHBvcnRmb2xpb19weChwcmljZXMsd2d0LHBvc2l0aW9ucyx2MClcbnBhcl9wIDwtIHdpbkVzdEdCTShwb3J0Zm9saW9fcHJpY2UsZFJ0bix5ZWFyKVxuYGBgIn0= -->
-<pre class="r"><code># part1: portfolio = weight1*s1+weight2*s2
-# Inputs Preparation
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbnB1dHMgUHJlcGFyYXRpb25cbnNvdXJjZShcIi4uL2NvZGUvcG9ydGZvbGlvX3ByaWNlLlJcIilcblxucHJpY2VzIDwtIGNvbWIuY29sKFhPTSRQWF9MQVNULElOVEMkUFhfTEFTVClcbndndCA8LSBjKDE1Ni8oMTU2KzIwMCksMjAwLygxNTYrMjAwKSlcbnBvc2l0aW9ucyA8LSBjKFwibG9uZ1wiLFwibG9uZ1wiKSBcblxuZFJ0biA8LSA1XG55ZWFyIDwtIDVcbnYwIDwtIDEwMDAwXG5cbnBvcnRmb2xpb19wcmljZSA8LSBwb3J0Zm9saW9fcHgocHJpY2VzLHdndCxwb3NpdGlvbnMsdjApXG5wYXJfcCA8LSB3aW5Fc3RHQk0ocG9ydGZvbGlvX3ByaWNlLGRSdG4seWVhcilcbmBgYCJ9 -->
+<pre class="r"><code># Inputs Preparation
 source(&quot;../code/portfolio_price.R&quot;)
 
 prices &lt;- comb.col(XOM$PX_LAST,INTC$PX_LAST)
@@ -320,9 +288,12 @@ par_p &lt;- winEstGBM(portfolio_price,dRtn,year)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="calculate-portfolio-var" class="section level5">
+<h5>4.1.2: Calculate Portfolio VaR</h5>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBIaXN0b3JpY2FsIFZhUiBcbnBvcnRfSHZhciA8LSBIVmFSX1MocG9ydGZvbGlvX3ByaWNlLDAuOTksZFJ0bix5ZWFyLHYwKVxucGxvdEdyYXBoKHBvcnRfSHZhcixJTlRDJERhdGVzKVxuXG4jIFBhcmFtZXRyaWMgVmFSIHBvcnRmb2xpbyBmb2xsb3dzIEdCTVxuR3ZhciA8LSBnYm1WYVIodjAscGFyX3AkbXVfZ2JtLHBhcl9wJHNpZ21hX2dibSwwLjk5LGRSdG4pXG5wbG90R3JhcGgoR3ZhcixJTlRDJERhdGVzKVxuXG4jIFBhcmFtZXRyaWMgVmFSIHVuZGVybHlpbmcgZm9sbG93cyBcblBWYVIgPC0gcGFyYW1ldHJpY1ZhUihhLHMwLG11LHNpZ21hLHJobyxwLHQpXG5wbG90R3JhcGgoUFZhUixJTlRDJERhdGVzKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBIaXN0b3JpY2FsIFZhUiBcbnBvcnRfSHZhciA8LSBIVmFSX1MocG9ydGZvbGlvX3ByaWNlLDAuOTksZFJ0bix5ZWFyLHYwKVxucGxvdEdyYXBoKHBvcnRfSHZhcixJTlRDJERhdGVzKVxuXG4jIFBhcmFtZXRyaWMgVmFSIHBvcnRmb2xpbyBmb2xsb3dzIEdCTVxuR3ZhciA8LSBnYm1WYVIodjAscGFyX3AkbXVfZ2JtLHBhcl9wJHNpZ21hX2dibSwwLjk5LGRSdG4pXG5wbG90R3JhcGgoR3ZhcixJTlRDJERhdGVzKVxuXG4jIFBhcmFtZXRyaWMgVmFSIHVuZGVybHlpbmcgZm9sbG93cyBHQk1cbiMtLSBuZWVkIHRvIHJldmlzZSBhbGwgY29kZSBpbiB0aGlzIHBhcnQgaW5jbHVkaW5nIGlucHV0cyAtLSNcbnNvdXJjZShcIi4uL2RvYy9sb2FkSW5wdXQuUlwiKVxuUFZhUiA8LSBwYXJhbWV0cmljVmFSKGEsczAsbXUsc2lnbWEscmhvLHAsdCx2MClcbnBsb3RHcmFwaChQVmFSLElOVEMkRGF0ZXMpXG5gYGAifQ== -->
 <pre class="r"><code># Historical VaR 
 port_Hvar &lt;- HVaR_S(portfolio_price,0.99,dRtn,year,v0)
 plotGraph(port_Hvar,INTC$Dates)
@@ -331,20 +302,22 @@ plotGraph(port_Hvar,INTC$Dates)
 Gvar &lt;- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,INTC$Dates)
 
-# Parametric VaR underlying follows 
-PVaR &lt;- parametricVaR(a,s0,mu,sigma,rho,p,t)
+# Parametric VaR underlying follows GBM
+#-- need to revise all code in this part including inputs --#
+source(&quot;../doc/loadInput.R&quot;)
+PVaR &lt;- parametricVaR(a,s0,mu,sigma,rho,p,t,v0)
 plotGraph(PVaR,INTC$Dates)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="portfolio-includes-stocks-and-options" class="section level5">
-<h5>4.1.2: Portfolio includes stocks and options</h5>
+</div>
+<div id="part-2-portfolio-stocks-options" class="section level4">
+<h4>4.2: Part 2: Portfolio = Stocks + Options</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwb3J0Zm9saW8gaW5jbHVkZXMgc3RvY2sgKyBvcHRpb25cbmFkZC5jb2w8LWZ1bmN0aW9uKGRmLCBuZXcuY29sKSB7XG4gIG4ucm93PC1kaW0oZGYpWzFdXG4gIGxlbmd0aChuZXcuY29sKTwtbi5yb3dcbiAgY2JpbmQoZGYsIG5ldy5jb2wpXG59XG5cbmNvbG5hbWVzKGltcF92b2wpIDwtIGMoXCJEYXRlc1wiLFwiUFhcIixcIklNUF9WT0xcIilcblxuaW1wX3ZvbCREYXRlcyA8LSBmb3JtYXQodGltZShpbXBfdm9sJERhdGVzKSlcbklOVEMkRGF0ZXMgPC0gZm9ybWF0KHRpbWUoSU5UQyREYXRlcykpXG5cbm1lcmdlKGltcF92b2wsSU5UQ1ssYygxLDYpXSxieT0gXCJEYXRlc1wiLGFsbCA9IFQpXG5cbmBgYCJ9 -->
-<pre class="r"><code># portfolio includes stock + option
-add.col&lt;-function(df, new.col) {
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRkLmNvbDwtZnVuY3Rpb24oZGYsIG5ldy5jb2wpIHtcbiAgbi5yb3c8LWRpbShkZilbMV1cbiAgbGVuZ3RoKG5ldy5jb2wpPC1uLnJvd1xuICBjYmluZChkZiwgbmV3LmNvbClcbn1cblxuY29sbmFtZXMoaW1wX3ZvbCkgPC0gYyhcIkRhdGVzXCIsXCJQWFwiLFwiSU1QX1ZPTFwiKVxuXG5pbXBfdm9sJERhdGVzIDwtIGZvcm1hdCh0aW1lKGltcF92b2wkRGF0ZXMpKVxuSU5UQyREYXRlcyA8LSBmb3JtYXQodGltZShJTlRDJERhdGVzKSlcblxubWVyZ2UoaW1wX3ZvbCxJTlRDWyxjKDEsNildLGJ5PSBcIkRhdGVzXCIsYWxsID0gVClcblxuYGBgIn0= -->
+<pre class="r"><code>add.col&lt;-function(df, new.col) {
   n.row&lt;-dim(df)[1]
   length(new.col)&lt;-n.row
   cbind(df, new.col)
@@ -360,27 +333,19 @@ merge(imp_vol,INTC[,c(1,6)],by= &quot;Dates&quot;,all = T)
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbnB1dHMgUHJlcGFyYXRpb25cblxuXG5cbmBgYCJ9 -->
+<pre class="r"><code># Inputs Preparation
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <div id="dont-run-below-parts" class="section level30">
 <p>Don’t Run Below Parts</p>
 <div id="section" class="section level57">
 <p></p>
 <p>Step:test part</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwYWNrYWdlIHRvIGxvYWQgc3RvY2sgcHJpY2VcbmlmICghcmVxdWlyZShcInF1YW50bW9kXCIpKSB7XG4gICAgaW5zdGFsbC5wYWNrYWdlcyhcInF1YW50bW9kXCIpXG4gICAgbGlicmFyeShxdWFudG1vZClcbn1cbiMgR2V0IG1lIG15IGJlbG92ZWQgcGlwZSBvcGVyYXRvciFcbmlmICghcmVxdWlyZShcIm1hZ3JpdHRyXCIpKSB7XG4gICAgaW5zdGFsbC5wYWNrYWdlcyhcIm1hZ3JpdHRyXCIpXG4gICAgbGlicmFyeShtYWdyaXR0cilcbn1cbmBgYCJ9 -->
-<pre class="r"><code># package to load stock price
-if (!require(&quot;quantmod&quot;)) {
-    install.packages(&quot;quantmod&quot;)
-    library(quantmod)
-}
-# Get me my beloved pipe operator!
-if (!require(&quot;magrittr&quot;)) {
-    install.packages(&quot;magrittr&quot;)
-    library(magrittr)
-}</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBvbmUgYXBwcm9hY2ggdG8gbG9hZCBzdG9jayBkYXRhc2V0XG5zdGFydCA8LSBhcy5EYXRlKFwiMjAxMC0wMS0wMVwiKVxuZW5kIDwtIGFzLkRhdGUoXCIyMDE4LTEwLTAxXCIpXG5cbmdldFN5bWJvbHMoXCJBQVBMXCIsIHNyYyA9IFwieWFob29cIiwgZnJvbSA9IHN0YXJ0LCB0byA9IGVuZClcbmdldFN5bWJvbHMoYyhcIk1TRlRcIiwgXCJHT09HXCIpLCBzcmMgPSBcInlhaG9vXCIsIGZyb20gPSBzdGFydCwgdG8gPSBlbmQpXG5cbmFwbGUgPC0gQWQoZ2V0U3ltYm9scyhcIkFBUExcIiwgc3JjID0gXCJ5YWhvb1wiLCBhdXRvLmFzc2lnbj0gRiwgZnJvbSA9IHN0YXJ0KSlcbmludGMgPC0gQWQoZ2V0U3ltYm9scyhcIklOVENcIiwgc3JjID0gXCJ5YWhvb1wiLCBhdXRvLmFzc2lnbj0gRiwgZnJvbSA9IHN0YXJ0KSlcblxuc3RvY2tzIDwtIGFzLnh0cyhkYXRhLmZyYW1lKEFBUEwgPSBBQVBMWywgXCJBQVBMLkNsb3NlXCJdLCBNU0ZUID0gTVNGVFssIFwiTVNGVC5DbG9zZVwiXSwgXG4gICAgR09PRyA9IEdPT0dbLCBcIkdPT0cuQ2xvc2VcIl0pKVxuXG4jIHVzZWZ1bCBpbiBwbG90XG5jaGFydFNlcmllcyhyZXR1cm5zX0FBUEwpXG5cbmBgYCJ9 -->
@@ -409,7 +374,7 @@ chartSeries(returns_AAPL)
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQpTdGVwIDE6IExvYWQgRGF0YQ0KYGBge3IsbWVzc2FnZT1GQUxTRX0NCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkocXVhbnRtb2QpDQpgYGANCg0KYGBge3J9DQpYT00gPC0gcmVhZC5jc3YoIi4uL2RhdGEvWE9NLWJsb29tYmVyZy5jc3YiKQ0KSU5UQyA8LSByZWFkLmNzdigiLi4vZGF0YS9JTlRDLWJsb29tYmVyZy5jc3YiKQ0KaW1wX3ZvbCA8LSByZWFkLmNzdigiLi4vZGF0YS92b2xhdGlsaXR5LmNzdiIpDQoNClhPTSREYXRlcyA8LSBhcy5EYXRlKFhPTSREYXRlcywiJW0vJWQvJVkiKQ0KSU5UQyREYXRlcyA8LSBhcy5EYXRlKElOVEMkRGF0ZXMsIiVtLyVkLyVZIikNCmltcF92b2wkRGF0ZSA8LSBhcy5EYXRlKGltcF92b2wkRGF0ZSwiJW0vJWQvJVkiKQ0KYGBgDQoNClN0ZXAgMjogU291cmNlIGZ1bmN0aW9uIGFuZCBmaWVscyANCmBgYHtyfQ0KIyBjYWxjdWxhdGUgcGFyYW1ldGVyIGZvciByZXR1cm4NCnNvdXJjZSgiLi4vY29kZS9wYXJhbWV0ZXIvd2luRXN0R0JNLlIiKQ0Kc291cmNlKCIuLi9jb2RlL3BhcmFtZXRlci9leHBFc3RHQk0uUiIpDQoNCiMgaGlzdG9yaWNhbCBWYVIvRVMNCnNvdXJjZSgiLi4vY29kZS9zdG9jay9IVmFSLlIiKQ0Kc291cmNlKCIuLi9jb2RlL3N0b2NrL0hFUy5SIikNCg0KIyBtb250ZSBjYXJsbyBWYVIvRVMNCiMgc291cmNlKCIuLi9jb2RlL3N0b2NrL01DVkFSICYgTUNFUy5SIikNCnNvdXJjZSgiLi4vY29kZS9zdG9jay9NQ191cGRhdGUuUiIpDQpzb3VyY2UoIi4uL2NvZGUvUHV0X01DVmFSLlIiKQ0KDQojIFBhcmFtZXRyaWMgVmFSL0VTDQpzb3VyY2UoIi4uL2NvZGUvc3RvY2svZ2JtVmFSLlIiKQ0Kc291cmNlKCIuLi9jb2RlL3N0b2NrL2dibUVTLlIiKQ0Kc291cmNlKCIuLi9jb2RlL3BhcmFtZXRyaWNWYVIuUiIpDQpzb3VyY2UoIi4uL2RvYy9jYWxjdWxhdGlvbl9tZWFzdXJlLlIiKQ0KDQojIHBsb3QgZ3JhcGgNCnNvdXJjZSgiLi4vY29kZS9wbG90R3JhcGguUiIpDQpgYGANCg0KU3RlcCAzOiBJbmRpdmlkdWFsIFN0b2NrIEFuYWx5c2lzDQojIyMjIDMuMDogUHJlcGFyYSBJbnB1dHMNCmBgYHtyfQ0KI3ByaWNlMSA8LSBYT00kUFhfTEFTVA0KI3ByaWNlMiA8LSBJTlRDJFBYX0xBU1QNCnMxIDwtIFhPTSRQWF9MQVNUDQpzMiA8LSBJTlRDJFBYX0xBU1QNCmRSdG4gPC0gNQ0KeWVhciA8LSA1DQpwYXIxIDwtIHdpbkVzdEdCTShzMSxkUnRuLHllYXIpDQpwYXIyIDwtIHdpbkVzdEdCTShzMixkUnRuLHllYXIpDQpzMDwtMTAwMDANCmBgYA0KDQojIyMjIDMuMTogQ2FsY3VsYXRlIFN0b2NrIFZhUg0KYGBge3J9DQojIGhpc3RvcmljYWwgVmFSICANCkh2YXIgPC0gSFZhUl9TKHMxLDAuOTksZFJ0bix5ZWFyLHMwKQ0KcGxvdEdyYXBoKEh2YXIsWE9NJERhdGVzKQ0KDQoNCiMgcGFyYW1lbnRyaWMgVmFSDQpHdmFyIDwtIGdibVZhUihzMCxwYXIxJG11X2dibSxwYXIxJHNpZ21hX2dibSwwLjk5LGRSdG4pDQpwbG90R3JhcGgoR3ZhcixYT00kRGF0ZXMpDQoNCg0KIyBNb250ZSBDYXJsbyBWYVINCk1WYVIgPC0gTUNWYVIoczAsIHBhcjEkbXVfZ2JtLCBwYXIxJHNpZ21hX2dibSwgcCwgZHQsIG5wYXRocyx5ZWFycyxkUnRuKQ0KcGxvdEdyYXBoKE1WYVIsWE9NJERhdGVzKQ0KYGBgDQoNCg0KU3RlcCA0OiBQb3J0Zm9saW8gQW5hbHlzaXMNCiMjIyMgNC4wOiBQcmVwYXJlIElucHV0cw0KYGBge3J9DQojIFBhcmFtZXRyaWMgVmFSIChwb3J0Zm9saW8gZm9sbG93IE5vcm1hbCBEaXN0cmlidXRpb24pDQojczEgPC0gWE9NJFBYX0xBU1QNCiNzMiA8LSBJTlRDJFBYX0xBU1QNCnMxXzAgPC0gMzIuMDYyNSAjWE9NDQpzMl8wIDwtIDI1LjAxNTYgI0lOVEMNCm11MSA8LSBwYXIxJG11X2dibVsxOjcwMDBdDQptdTIgPC0gcGFyMiRtdV9nYm1bMTo3MDAwXQ0Kc2lnbWExIDwtIHBhcjEkc2lnbWFfZ2JtWzE6NzAwMF0NCnNpZ21hMiA8LSBwYXIyJHNpZ21hX2dibVsxOjcwMDBdDQphIDwtIGMoMTU2LDIwMCkgICMgaWYgd2Ugb25seSBhc3NpZ24gd2VpZ2h0cyB0byBlYWNoIGNvbXBvbmVudCBvZiBwb3J0Zm9saW8/IGhvdyB0byBkZWNpZGUgcG9zaXRpb24gaGVyZT8NCnBfcHJpY2UgPC0gY2JpbmQoczEsczIpDQpwb3J0Zm9saW9fcHJpY2UgPC0gcmVwKDAsbGVuZ3RoKG11MSkpDQogIGZvciAoaSBpbiAxOmxlbmd0aChwb3J0Zm9saW9fcHJpY2UpKXsNCiAgICBmb3IgKGogaW4gMTpsZW5ndGgoYSkpew0KICAgICAgcG9ydGZvbGlvX3ByaWNlW2ldIDwtIGFbal0qcF9wcmljZVtpLGpdDQogICAgfQ0KICB9DQpzMCA8LSBjKHMxXzAsczJfMCkgICMgd2hhdCdzIHMxXzAgYW5kIHMyXzAgaGVyZSwgaXMgdGhlIGRhaWx0eSBzdG9jayBwcmljZT8NCnYwID0gRkFMU0UNCm11IDwtIGMobXUxLG11MikNCnNpZ21hIDwtIGMoc2lnbWExLHNpZ21hMikNCmRhdGFkdCA8LSAxLzI1Mg0KcnRuMSA8LSAtZGlmZihsb2coczEpLDEpDQpydG4yIDwtIC1kaWZmKGxvZyhzMiksMSkNCnJ0bjEgPC0gcnRuMVsxOjcwMDBdDQpydG4yIDwtIHJ0bjJbMTo3MDAwXQ0KcmhvIDwtIGNvdihydG4xLHJ0bjIpL2RhdGFkdC8oc2lnbWExKnNpZ21hMikNCnQgPC0gNS8yNTINCnAgPC0gMC45OQ0KYGBgDQoNCiMjIyMgNC4xOiBDYWxjdWxhdGUgUG9ydGZvbGlvIFZhUg0KIyMjIyMgNC4xLjE6IFBvcnRmb2xpbyBvbmx5IGluY2x1ZGVzIHN0b2Nrcw0KYGBge3J9DQojIHBhcnQxOiBwb3J0Zm9saW8gPSB3ZWlnaHQxKnMxK3dlaWdodDIqczINCiMgSW5wdXRzIFByZXBhcmF0aW9uDQpzb3VyY2UoIi4uL2NvZGUvcG9ydGZvbGlvX3ByaWNlLlIiKQ0KDQpwcmljZXMgPC0gY29tYi5jb2woWE9NJFBYX0xBU1QsSU5UQyRQWF9MQVNUKQ0Kd2d0IDwtIGMoMTU2LygxNTYrMjAwKSwyMDAvKDE1NisyMDApKQ0KcG9zaXRpb25zIDwtIGMoImxvbmciLCJsb25nIikgDQoNCmRSdG4gPC0gNQ0KeWVhciA8LSA1DQp2MCA8LSAxMDAwMA0KDQpwb3J0Zm9saW9fcHJpY2UgPC0gcG9ydGZvbGlvX3B4KHByaWNlcyx3Z3QscG9zaXRpb25zLHYwKQ0KcGFyX3AgPC0gd2luRXN0R0JNKHBvcnRmb2xpb19wcmljZSxkUnRuLHllYXIpDQpgYGANCg0KYGBge3J9DQojIEhpc3RvcmljYWwgVmFSIA0KcG9ydF9IdmFyIDwtIEhWYVJfUyhwb3J0Zm9saW9fcHJpY2UsMC45OSxkUnRuLHllYXIsdjApDQpwbG90R3JhcGgocG9ydF9IdmFyLElOVEMkRGF0ZXMpDQoNCiMgUGFyYW1ldHJpYyBWYVIgcG9ydGZvbGlvIGZvbGxvd3MgR0JNDQpHdmFyIDwtIGdibVZhUih2MCxwYXJfcCRtdV9nYm0scGFyX3Akc2lnbWFfZ2JtLDAuOTksZFJ0bikNCnBsb3RHcmFwaChHdmFyLElOVEMkRGF0ZXMpDQoNCiMgUGFyYW1ldHJpYyBWYVIgdW5kZXJseWluZyBmb2xsb3dzIA0KUFZhUiA8LSBwYXJhbWV0cmljVmFSKGEsczAsbXUsc2lnbWEscmhvLHAsdCkNCnBsb3RHcmFwaChQVmFSLElOVEMkRGF0ZXMpDQpgYGANCg0KDQojIyMjIyA0LjEuMjogUG9ydGZvbGlvIGluY2x1ZGVzIHN0b2NrcyBhbmQgb3B0aW9ucw0KYGBge3J9DQojIHBvcnRmb2xpbyBpbmNsdWRlcyBzdG9jayArIG9wdGlvbg0KYWRkLmNvbDwtZnVuY3Rpb24oZGYsIG5ldy5jb2wpIHsNCiAgbi5yb3c8LWRpbShkZilbMV0NCiAgbGVuZ3RoKG5ldy5jb2wpPC1uLnJvdw0KICBjYmluZChkZiwgbmV3LmNvbCkNCn0NCg0KY29sbmFtZXMoaW1wX3ZvbCkgPC0gYygiRGF0ZXMiLCJQWCIsIklNUF9WT0wiKQ0KDQppbXBfdm9sJERhdGVzIDwtIGZvcm1hdCh0aW1lKGltcF92b2wkRGF0ZXMpKQ0KSU5UQyREYXRlcyA8LSBmb3JtYXQodGltZShJTlRDJERhdGVzKSkNCg0KbWVyZ2UoaW1wX3ZvbCxJTlRDWyxjKDEsNildLGJ5PSAiRGF0ZXMiLGFsbCA9IFQpDQoNCmBgYA0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyBEb24ndCBSdW4gQmVsb3cgUGFydHMgIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMNCg0KIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjDQpTdGVwOnRlc3QgcGFydA0KYGBge3J9DQojIHBhY2thZ2UgdG8gbG9hZCBzdG9jayBwcmljZQ0KaWYgKCFyZXF1aXJlKCJxdWFudG1vZCIpKSB7DQogICAgaW5zdGFsbC5wYWNrYWdlcygicXVhbnRtb2QiKQ0KICAgIGxpYnJhcnkocXVhbnRtb2QpDQp9DQojIEdldCBtZSBteSBiZWxvdmVkIHBpcGUgb3BlcmF0b3IhDQppZiAoIXJlcXVpcmUoIm1hZ3JpdHRyIikpIHsNCiAgICBpbnN0YWxsLnBhY2thZ2VzKCJtYWdyaXR0ciIpDQogICAgbGlicmFyeShtYWdyaXR0cikNCn0NCmBgYA0KDQpgYGB7cn0NCiMgb25lIGFwcHJvYWNoIHRvIGxvYWQgc3RvY2sgZGF0YXNldA0Kc3RhcnQgPC0gYXMuRGF0ZSgiMjAxMC0wMS0wMSIpDQplbmQgPC0gYXMuRGF0ZSgiMjAxOC0xMC0wMSIpDQoNCmdldFN5bWJvbHMoIkFBUEwiLCBzcmMgPSAieWFob28iLCBmcm9tID0gc3RhcnQsIHRvID0gZW5kKQ0KZ2V0U3ltYm9scyhjKCJNU0ZUIiwgIkdPT0ciKSwgc3JjID0gInlhaG9vIiwgZnJvbSA9IHN0YXJ0LCB0byA9IGVuZCkNCg0KYXBsZSA8LSBBZChnZXRTeW1ib2xzKCJBQVBMIiwgc3JjID0gInlhaG9vIiwgYXV0by5hc3NpZ249IEYsIGZyb20gPSBzdGFydCkpDQppbnRjIDwtIEFkKGdldFN5bWJvbHMoIklOVEMiLCBzcmMgPSAieWFob28iLCBhdXRvLmFzc2lnbj0gRiwgZnJvbSA9IHN0YXJ0KSkNCg0Kc3RvY2tzIDwtIGFzLnh0cyhkYXRhLmZyYW1lKEFBUEwgPSBBQVBMWywgIkFBUEwuQ2xvc2UiXSwgTVNGVCA9IE1TRlRbLCAiTVNGVC5DbG9zZSJdLCANCiAgICBHT09HID0gR09PR1ssICJHT09HLkNsb3NlIl0pKQ0KDQojIHVzZWZ1bCBpbiBwbG90DQpjaGFydFNlcmllcyhyZXR1cm5zX0FBUEwpDQoNCmBgYA0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdSNTMyMCBQcm9qZWN0Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQojIyMgU3RlcCAxOiBMb2FkIERhdGENCmBgYHtyLG1lc3NhZ2U9RkFMU0V9DQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KHF1YW50bW9kKQ0KaWYgKCFyZXF1aXJlKCJxdWFudG1vZCIpKSB7DQogICAgaW5zdGFsbC5wYWNrYWdlcygicXVhbnRtb2QiKQ0KICAgIGxpYnJhcnkocXVhbnRtb2QpDQp9DQpgYGANCg0KYGBge3J9DQpYT00gPC0gcmVhZC5jc3YoIi4uL2RhdGEvWE9NLWJsb29tYmVyZy5jc3YiKQ0KSU5UQyA8LSByZWFkLmNzdigiLi4vZGF0YS9JTlRDLWJsb29tYmVyZy5jc3YiKQ0KaW1wX3ZvbCA8LSByZWFkLmNzdigiLi4vZGF0YS92b2xhdGlsaXR5LmNzdiIpDQoNClhPTSREYXRlcyA8LSBhcy5EYXRlKFhPTSREYXRlcywiJW0vJWQvJVkiKQ0KSU5UQyREYXRlcyA8LSBhcy5EYXRlKElOVEMkRGF0ZXMsIiVtLyVkLyVZIikNCmltcF92b2wkRGF0ZSA8LSBhcy5EYXRlKGltcF92b2wkRGF0ZSwiJW0vJWQvJVkiKQ0KYGBgDQoNCiMjIyBTdGVwIDI6IFNvdXJjZSBmdW5jdGlvbiBhbmQgZmllbHMgDQpgYGB7cn0NCiMgY2FsY3VsYXRlIHBhcmFtZXRlciBmb3IgcmV0dXJuDQpzb3VyY2UoIi4uL2NvZGUvcGFyYW1ldGVyL3dpbkVzdEdCTS5SIikNCnNvdXJjZSgiLi4vY29kZS9wYXJhbWV0ZXIvZXhwRXN0R0JNLlIiKQ0KDQojIGhpc3RvcmljYWwgVmFSL0VTDQpzb3VyY2UoIi4uL2NvZGUvc3RvY2svSFZhUi5SIikNCnNvdXJjZSgiLi4vY29kZS9zdG9jay9IRVMuUiIpDQoNCiMgbW9udGUgY2FybG8gVmFSL0VTDQojIHNvdXJjZSgiLi4vY29kZS9zdG9jay9NQ1ZBUiAmIE1DRVMuUiIpDQpzb3VyY2UoIi4uL2NvZGUvc3RvY2svTUNfdXBkYXRlLlIiKQ0Kc291cmNlKCIuLi9jb2RlL1B1dF9NQ1ZhUi5SIikNCg0KIyBQYXJhbWV0cmljIFZhUi9FUw0Kc291cmNlKCIuLi9jb2RlL3N0b2NrL2dibVZhUi5SIikNCnNvdXJjZSgiLi4vY29kZS9zdG9jay9nYm1FUy5SIikNCnNvdXJjZSgiLi4vY29kZS9wYXJhbWV0cmljVmFSLlIiKQ0Kc291cmNlKCIuLi9kb2MvY2FsY3VsYXRpb25fbWVhc3VyZS5SIikNCg0KIyBwbG90IGdyYXBoDQpzb3VyY2UoIi4uL2NvZGUvcGxvdEdyYXBoLlIiKQ0KYGBgDQoNCg0KIyMjIFN0ZXAgMzogSW5kaXZpZHVhbCBTdG9jayBBbmFseXNpcw0KDQojIyMjIDMuMDogUHJlcGFyZSBJbnB1dHMNCmBgYHtyfQ0KczEgPC0gWE9NJFBYX0xBU1QNCnMyIDwtIElOVEMkUFhfTEFTVA0KZFJ0biA8LSA1DQp5ZWFyIDwtIDUNCnBhcjEgPC0gd2luRXN0R0JNKHMxLGRSdG4seWVhcikNCnBhcjIgPC0gd2luRXN0R0JNKHMyLGRSdG4seWVhcikNCnMwIDwtIDEwMDAwDQpgYGANCg0KIyMjIyAzLjE6IENhbGN1bGF0ZSBJbmRpdmlkdWFsIFN0b2NrIFZhUg0KYGBge3J9DQojIGhpc3RvcmljYWwgVmFSICANCkh2YXIgPC0gSFZhUl9TKHMxLDAuOTksZFJ0bix5ZWFyLHMwKQ0KcGxvdEdyYXBoKEh2YXIsWE9NJERhdGVzKQ0KDQoNCiMgcGFyYW1lbnRyaWMgVmFSDQpHdmFyIDwtIGdibVZhUihzMCxwYXIxJG11X2dibSxwYXIxJHNpZ21hX2dibSwwLjk5LGRSdG4pDQpwbG90R3JhcGgoR3ZhcixYT00kRGF0ZXMpDQoNCg0KIyBNb250ZSBDYXJsbyBWYVINCk1WYVIgPC0gTUNWYVIoczAsIHBhcjEkbXVfZ2JtLCBwYXIxJHNpZ21hX2dibSwgcCwgZHQsIG5wYXRocyx5ZWFycyxkUnRuKQ0KcGxvdEdyYXBoKE1WYVIsWE9NJERhdGVzKQ0KYGBgDQoNCg0KIyMjIFN0ZXAgNDogUG9ydGZvbGlvIEFuYWx5c2lzDQoNCiMjIyMgNC4xOiBQYXJ0IDE6IFBvcnRmb2xpbyA9IHdlaWdodDEqczEgKyB3ZWlnaHQyKnMyDQojIyMjIyA0LjEuMTogUHJlcGFyZSBJbnB1dHMNCmBgYHtyfQ0KIyBJbnB1dHMgUHJlcGFyYXRpb24NCnNvdXJjZSgiLi4vY29kZS9wb3J0Zm9saW9fcHJpY2UuUiIpDQoNCnByaWNlcyA8LSBjb21iLmNvbChYT00kUFhfTEFTVCxJTlRDJFBYX0xBU1QpDQp3Z3QgPC0gYygxNTYvKDE1NisyMDApLDIwMC8oMTU2KzIwMCkpDQpwb3NpdGlvbnMgPC0gYygibG9uZyIsImxvbmciKSANCg0KZFJ0biA8LSA1DQp5ZWFyIDwtIDUNCnYwIDwtIDEwMDAwDQoNCnBvcnRmb2xpb19wcmljZSA8LSBwb3J0Zm9saW9fcHgocHJpY2VzLHdndCxwb3NpdGlvbnMsdjApDQpwYXJfcCA8LSB3aW5Fc3RHQk0ocG9ydGZvbGlvX3ByaWNlLGRSdG4seWVhcikNCmBgYA0KDQojIyMjIyA0LjEuMjogQ2FsY3VsYXRlIFBvcnRmb2xpbyBWYVINCmBgYHtyfQ0KIyBIaXN0b3JpY2FsIFZhUiANCnBvcnRfSHZhciA8LSBIVmFSX1MocG9ydGZvbGlvX3ByaWNlLDAuOTksZFJ0bix5ZWFyLHYwKQ0KcGxvdEdyYXBoKHBvcnRfSHZhcixJTlRDJERhdGVzKQ0KDQojIFBhcmFtZXRyaWMgVmFSIHBvcnRmb2xpbyBmb2xsb3dzIEdCTQ0KR3ZhciA8LSBnYm1WYVIodjAscGFyX3AkbXVfZ2JtLHBhcl9wJHNpZ21hX2dibSwwLjk5LGRSdG4pDQpwbG90R3JhcGgoR3ZhcixJTlRDJERhdGVzKQ0KDQojIFBhcmFtZXRyaWMgVmFSIHVuZGVybHlpbmcgZm9sbG93cyBHQk0NCiMtLSBuZWVkIHRvIHJldmlzZSBhbGwgY29kZSBpbiB0aGlzIHBhcnQgaW5jbHVkaW5nIGlucHV0cyAtLSMNCnNvdXJjZSgiLi4vZG9jL2xvYWRJbnB1dC5SIikNClBWYVIgPC0gcGFyYW1ldHJpY1ZhUihhLHMwLG11LHNpZ21hLHJobyxwLHQsdjApDQpwbG90R3JhcGgoUFZhUixJTlRDJERhdGVzKQ0KYGBgDQoNCg0KIyMjIyA0LjI6IFBhcnQgMjogUG9ydGZvbGlvID0gU3RvY2tzICsgT3B0aW9ucw0KYGBge3J9DQphZGQuY29sPC1mdW5jdGlvbihkZiwgbmV3LmNvbCkgew0KICBuLnJvdzwtZGltKGRmKVsxXQ0KICBsZW5ndGgobmV3LmNvbCk8LW4ucm93DQogIGNiaW5kKGRmLCBuZXcuY29sKQ0KfQ0KDQpjb2xuYW1lcyhpbXBfdm9sKSA8LSBjKCJEYXRlcyIsIlBYIiwiSU1QX1ZPTCIpDQoNCmltcF92b2wkRGF0ZXMgPC0gZm9ybWF0KHRpbWUoaW1wX3ZvbCREYXRlcykpDQpJTlRDJERhdGVzIDwtIGZvcm1hdCh0aW1lKElOVEMkRGF0ZXMpKQ0KDQptZXJnZShpbXBfdm9sLElOVENbLGMoMSw2KV0sYnk9ICJEYXRlcyIsYWxsID0gVCkNCg0KYGBgDQoNCmBgYHtyfQ0KIyBJbnB1dHMgUHJlcGFyYXRpb24NCg0KDQoNCmBgYA0KDQoNCg0KDQoNCg0KDQoNCg0KDQojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMgRG9uJ3QgUnVuIEJlbG93IFBhcnRzICMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjDQoNCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIw0KU3RlcDp0ZXN0IHBhcnQNCmBgYHtyfQ0KIyBvbmUgYXBwcm9hY2ggdG8gbG9hZCBzdG9jayBkYXRhc2V0DQpzdGFydCA8LSBhcy5EYXRlKCIyMDEwLTAxLTAxIikNCmVuZCA8LSBhcy5EYXRlKCIyMDE4LTEwLTAxIikNCg0KZ2V0U3ltYm9scygiQUFQTCIsIHNyYyA9ICJ5YWhvbyIsIGZyb20gPSBzdGFydCwgdG8gPSBlbmQpDQpnZXRTeW1ib2xzKGMoIk1TRlQiLCAiR09PRyIpLCBzcmMgPSAieWFob28iLCBmcm9tID0gc3RhcnQsIHRvID0gZW5kKQ0KDQphcGxlIDwtIEFkKGdldFN5bWJvbHMoIkFBUEwiLCBzcmMgPSAieWFob28iLCBhdXRvLmFzc2lnbj0gRiwgZnJvbSA9IHN0YXJ0KSkNCmludGMgPC0gQWQoZ2V0U3ltYm9scygiSU5UQyIsIHNyYyA9ICJ5YWhvbyIsIGF1dG8uYXNzaWduPSBGLCBmcm9tID0gc3RhcnQpKQ0KDQpzdG9ja3MgPC0gYXMueHRzKGRhdGEuZnJhbWUoQUFQTCA9IEFBUExbLCAiQUFQTC5DbG9zZSJdLCBNU0ZUID0gTVNGVFssICJNU0ZULkNsb3NlIl0sIA0KICAgIEdPT0cgPSBHT09HWywgIkdPT0cuQ2xvc2UiXSkpDQoNCiMgdXNlZnVsIGluIHBsb3QNCmNoYXJ0U2VyaWVzKHJldHVybnNfQUFQTCkNCg0KYGBgDQoNCg0K</div>
 
 
 
