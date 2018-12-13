@@ -35,7 +35,7 @@ MCVaR <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   return(MCVaR)
 }
 
-MCVaR <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
+MCES <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
   
   # dRtn <- 5
   # s0 <- 10000
