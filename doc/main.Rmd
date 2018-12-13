@@ -116,6 +116,8 @@ plotGraph(Gvar,INTC$Dates)
 source("../doc/loadInput.R")
 PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t,v0)
 plotGraph(PVaR,INTC$Dates)
+
+# Monte Carlo (more than 2 stocks situations)
 ```
 
 
@@ -140,13 +142,28 @@ merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
 ```{r}
 # Inputs Preparation
 
-
-
 ```
 
 
+To do list
+
+Portfolio
+1.Historical VaR
+  a.how to calculate Profit & Loss?
+
+2.Parametric VaR(underlying stocks follow GBM)
+  a.two stocks + need revise the function
+  b.3 stocks, how to construct covariance matrix?
+  c.stocks+options
 
 
+3.Monte Carlo VaR
+  a.two stocks(construct rho and w1,w2)
+  b.stocks+options
+  
+4. Backtest
+
+5. Documentation
 
 
 
