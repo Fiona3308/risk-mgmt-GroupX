@@ -133,8 +133,9 @@ imp_vol$Dates <- format(time(imp_vol$Dates))
 INTC$Dates <- format(time(INTC$Dates))
 
 merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
-
 ```
+
+
 
 ```{r}
 # Inputs Preparation
