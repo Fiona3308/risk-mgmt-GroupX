@@ -47,6 +47,9 @@ source("../doc/calculation_measure.R")
 
 # plot graph
 source("../code/plotGraph.R")
+
+# Backtest
+source("../code/BackTest.R")
 ```
 
 
@@ -73,6 +76,8 @@ plotGraph(Hvar,XOM$Dates)
 # paramentric VaR
 Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,XOM$Dates)
+#Backtest
+BT=BackTest(s1,Gvar,5,10000)
 
 
 # Monte Carlo VaR
