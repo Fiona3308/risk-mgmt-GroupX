@@ -5,7 +5,7 @@
 #k = k paths/scenarios
 
 bmsampset <- function(n,dt,k){
-
+x``
   w <- matrix(0,nrow = k,ncol = n)
   s <- matrix(0,nrow = k,ncol = n)
   for (i in 1:n){

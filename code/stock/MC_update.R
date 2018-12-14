@@ -9,7 +9,7 @@
 
 # only did one time step here in monte carlo simulation of GBM
 
-MCVaR <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
+MCVaR <- function(s0, mu, sigma, p, npaths,years,dRtn){
   
   dRtn <- 5
   s0 <- 10000

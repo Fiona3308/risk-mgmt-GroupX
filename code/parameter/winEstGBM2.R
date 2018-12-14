@@ -1,10 +1,3 @@
-# construct portfolio
-
-stock1Shares <- 156
-stock2Shares <- 200
-
-portValue <- stock1Shares*stock1 + stock2Shares*stock2
-
 
 # Inputs:
 #   prices=vector of daily historical prices, from newest to oldest
@@ -52,9 +45,10 @@ winEstGBM2 <- function(prices,dRtn,year){
   }else{
     rho <- NA
   }
+  return(rho)
 }
 
-# mm <- winEstGBM2(prices,dRtn = 5,year = 5)
-
+# rho <- winEstGBM2(prices,dRtn = 5,year = 5)
+# View(mm)
 
  
