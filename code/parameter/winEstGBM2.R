@@ -1,3 +1,5 @@
+# Parameters of the portfolio (including two stocks)
+# Output: mu and sigma of each stock in the portfolio, rho of two stocks
 
 # Inputs:
 #   prices=vector of daily historical prices, from newest to oldest
@@ -6,21 +8,21 @@
 #   
 # Returns:
 #   rtn = log returns
-#   mu = estimates for drift
-#   sigma = estimates for sigma
 #   mubar = mean of log returns
 #   sigmabar = standard deviation of log returns
+#   mu = estimates for drift
+#   sigma = estimates for sigma
 #   rho = if prices has 2 price series, rho has the correlation of the brownian motion drivers.
 
-  comb.col <- function(dat1, dat2) {
+comb.col <- function(dat1, dat2) {
   n.row <- min(length(dat1),length(dat2))
   length(dat1) <- n.row
   length(dat2) <- n.row
   cbind(dat1, dat2)
-  }
+}
 
 prices <- comb.col(s1,s2)
-  
+
 winEstGBM2 <- function(prices,dRtn,year){
   wid_len <- year*252
   rtn <- -diff(log(prices),dRtn)                                           # log returns
@@ -45,8 +47,8 @@ winEstGBM2 <- function(prices,dRtn,year){
   }else{
     rho <- NA
   }
-  return(rho)
+  # return(rho)
+  return(list("mu_gbm"=mu_gbm,"sigma_gbm"=sigma_gbm,"rho"=rho))
 }
 
-# rho <- winEstGBM2(prices,dRtn = 5,year = 5)
 
