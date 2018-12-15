@@ -18,7 +18,7 @@ weight <- c(0.5,0.5)
 shares <- weight*v0/prices[1,]
 
 dRtn <- 5
-year <- 5
+years <- 5
 v0 <- 10000
 npaths <- 1000
 
@@ -76,4 +76,4 @@ View(st1_bm)
 
 
 
-mm <- MCVaR(v0, mu, sigma,rho, p, npaths,years,dRtn)
+pp <- MCVaR(v0, mm$mu_gbm, mm$sigma, mm$rho, p, npaths,years,dRtn)
