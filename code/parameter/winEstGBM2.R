@@ -19,10 +19,10 @@
   cbind(dat1, dat2)
   }
 
-prices <- comb.col(stock1,stock2)
+prices <- comb.col(s1,s2)
   
 winEstGBM2 <- function(prices,dRtn,year){
-  win_len <- year*252
+  wid_len <- year*252
   rtn <- -diff(log(prices),dRtn)                                           # log returns
   rtnsq <- rtn^2                                                           # square of log returns
   period <- nrow(rtn)-wid_len                                            # period for loop 
@@ -49,6 +49,4 @@ winEstGBM2 <- function(prices,dRtn,year){
 }
 
 # rho <- winEstGBM2(prices,dRtn = 5,year = 5)
-# View(mm)
 
- 

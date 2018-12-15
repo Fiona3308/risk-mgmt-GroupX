@@ -42,7 +42,7 @@ source("../code/Put_MCVaR.R")
 # Parametric VaR/ES
 source("../code/stock/gbmVaR.R")
 source("../code/stock/gbmES.R")
-source("../code/parametricVaR.R")
+source("../code/stocks_parametricVaR.R")
 source("../doc/calculation_measure.R")
 
 # plot graph
