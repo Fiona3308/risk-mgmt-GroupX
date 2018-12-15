@@ -12,33 +12,36 @@ stock2 <- INTC$PX_LAST
 source("../code/parameter/winEstGBM2.R")
 source("../code/corrbmsampset.R")
 
+# inputs
 prices <- comb.col(stock1,stock2)
-
-par1 <- winEstGBM(XOM$PX_LAST,5,5)
-par2 <- winEstGBM(INTC$PX_LAST,5,5)
-
-mu <- comb.col(par1$mu_gbm,par2$mu_gbm)
-sigma <- comb.col(par1$sigma_gbm,par2$sigma_gbm)
-
-rho <- winEstGBM2(prices,5,5)
-
-v0 <- 10000
-
 weight <- c(0.5,0.5)
 shares <- weight*v0/prices[1,]
 
+dRtn <- 5
+year <- 5
+v0 <- 10000
+npaths <- 1000
+
+# parameters
+est <- winEstGBM2(prices,dRtn,year)
+
+
 MCVaR <- function(v0, mu, sigma,rho, p, npaths,years,dRtn){
-  v0 <- 10000
+  # v0 <- 10000
   dt <- dRtn/252
-  p <- 0.99
-  years <- 5 
-  npaths <- 10000
+  # p <- 0.99
+  # years <- 5 
+  # npaths <- 10000
   k <- npaths
   
   npts <- 252*years
-  ntrails <- length(rho)
   
-  
+  if(class(rho)=="numeric"){
+    ntrails <- length(rho)
+  }else{
+    ntrails <- nrow(rho)
+  }
+
   MCVaR <- NA
   st1_bm <- matrix(0,nrow=k,ncol=ntrails)
   st2_bm <- matrix(0,nrow=k,ncol=ntrails)
