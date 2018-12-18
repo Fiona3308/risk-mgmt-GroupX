@@ -69,7 +69,7 @@ s0 <- 10000
 ```
 
 #### 3.1: Calculate Individual Stock VaR
-```{r}
+```{r,warning=FALSE}
 # historical VaR  
 Hvar <- HVaR_S(s1,0.99,dRtn,year,s0)
 plotGraph(Hvar,XOM$Dates)
@@ -79,7 +79,8 @@ plotGraph(Hvar,XOM$Dates)
 Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,XOM$Dates)
 #Backtest
-BT=BackTest(s1,Gvar,5,10000)
+BT<-BackTest(s1,Gvar,5,10000)
+plotGraph(BT,XOM$Dates)
 
 
 # Monte Carlo VaR
