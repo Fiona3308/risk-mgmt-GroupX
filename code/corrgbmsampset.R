@@ -15,8 +15,9 @@ stock2 <- INTC$PX_LAST
 
 # inputs
 prices <- comb.col(stock1,stock2)
-weight <- c(156/(156+200),0.5/(156+200))
-shares <- weight*v0/prices[1,]
+weight <- c(156/(156+200),200/(156+200))
+# shares <- weight*v0/prices[1,]
+shares <- c(156,200)
 
 dRtn <- 5
 years <- 5
@@ -73,5 +74,5 @@ MCVaR <- function(v0, mu, sigma,rho, shares,p, npaths,years,dRtn){
 }
 
 
-pp <- MCVaR(v0, est$mu_gbm, est$sigma, est$rho,shares,p, npaths,years,dRtn)
+ll <- MCVaR(v0, est$mu_gbm, est$sigma, est$rho,shares,p, npaths,years,dRtn)
 plotGraph(pp,INTC$Dates)
