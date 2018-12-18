@@ -12,7 +12,6 @@ if (!require("quantmod")) {
     install.packages("quantmod")
     library(quantmod)
 }
-library(MASS)
 ```
 
 ```{r}
@@ -25,21 +24,20 @@ INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
-### Step 2: Source function and fiels 
+### Step 2: Source function and files 
 ```{r}
-# calculate parameter for stocks/portfolio return
+# calculate parameter for return
 source("../code/parameter/winEstGBM.R")
 source("../code/parameter/expEstGBM.R")
-source("../code/parameter/winEstGBM2.R")
 
 # historical VaR/ES
 source("../code/stock/HVaR.R")
 source("../code/stock/HES.R")
 
 # monte carlo VaR/ES
+# source("../code/stock/MCVAR & MCES.R")
 source("../code/stock/MC_update.R")
 source("../code/Put_MCVaR.R")
-source("../code/corrbmsampset.R")
 
 # Parametric VaR/ES
 source("../code/stock/gbmVaR.R")
@@ -49,6 +47,7 @@ source("../doc/calculation_measure.R")
 
 # plot graph
 source("../code/plotGraph.R")
+source("../code/BTplot.R")
 
 # Backtest
 source("../code/BackTest.R")
@@ -79,8 +78,8 @@ plotGraph(Hvar,XOM$Dates)
 Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,XOM$Dates)
 #Backtest
-BT<-BackTest(s1,Gvar,5,10000)
-plotGraph(BT,XOM$Dates)
+GvaR_BT<-BackTest(s1,Gvar,5,10000)
+plotGraph(GvaRPBT,XOM$Dates)
 
 
 # Monte Carlo VaR
@@ -118,12 +117,17 @@ plotGraph(port_Hvar,INTC$Dates)
 # Parametric VaR portfolio follows GBM
 Gvar <- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,0.99,dRtn)
 plotGraph(Gvar,INTC$Dates)
+#Back Test
+GvaR_BT<-BackTest(portfolio_price,Gvar,5,10000)
+BTplot(GvaR_BT,INTC$Dates)
 
 # Parametric VaR underlying follows GBM
 #-- need to revise all code in this part including inputs --#
 source("../doc/loadInput.R")
 PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t,v0)
 plotGraph(PVaR,INTC$Dates)
+PvaR_BT<-BackTest(portfolio_price,PVaR,5,10000)
+BTplot(PvaR_BT,INTC$Dates)
 
 # Monte Carlo (more than 2 stocks situations)
 ```
