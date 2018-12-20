@@ -33,6 +33,8 @@ INTC <- INTC[order(INTC$date,decreasing = T),]
 ```
 
 **Options**
+
+We download data implied volatility of options from bloomberg.
 ```{r}
 imp_vol <- read.csv("../data/volatility.csv")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
@@ -78,6 +80,7 @@ source("../code/plotGraph.R")
 
 #others
 source("../doc/calculation_measure.R")
+source("../code/BlackScholesOption.R")
 
 # Backtest
 source("../code/BackTest.R")
@@ -192,17 +195,17 @@ plotGraph(MCVaR_p1,INTC$date)
 
 #### 4.2: Part 2: Portfolio = Stocks + Options
 ```{r}
-add.col<-function(df, new.col) {
-  n.row<-dim(df)[1]
-  length(new.col)<-n.row
-  cbind(df, new.col)
+option <- function(option,price){
+  option <- option[,c(1,ncol(option))]
+  colnames(option) <- c("date","Implied_Vol")
+  option$date <- as.Date(option$date,"%m/%d/%y")
+  px <- price[,c(1,ncol(price))]
+  option_px <- merge(transform(px,date),transform(option,date))
+  return(option_px)
 }
 
-
-intc.op <- intc.option[,c(1,7)]
-colnames(intc.op) <- c("date","Implied_Vol")
-intc.op$date <- as.Date(intc.op$date,"%m/%d/%y")
-option <- merge(INTC,intc.option,by="date")
+option1 <- option(xom.option,XOM)
+option2 <- option(intc.option,INTC)
 ```
 
 

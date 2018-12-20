@@ -26,3 +26,27 @@ Option_HVaR <- function(s0, price, year, rf, nstocks, iv1, strike1, maturity1,
   }
   return (VaR)
 }
+
+
+v0 <- 10000
+VaRp <- 0.99
+horizon <- 5
+price1 <- option1$adjusted
+s0 <- price1
+nstocks <- 0.90*v0/option1$adjusted[1]
+iv1 <- option1$Implied_Vol
+iv2 <- option1$Implied_Vol
+rf <- 0.005
+strike1 <- price1
+strike2 <- price1
+maturity1 <- 1
+maturity1 <- 1
+
+putt <- Put(price1, strike1, rf, maturity1, iv1)
+calll <- call(s0, strike2, rf, maturity2, iv2)
+
+ncalls <- 0.05*v0/call[1]
+nputs <- 0.05*v0/putt[1]
+  
+
+opVaR <- Option_HVaR(s0,option$adjusted,1,)
