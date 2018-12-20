@@ -36,6 +36,8 @@ INTC <- INTC[order(INTC$date,decreasing = T),]
 ```{r}
 imp_vol <- read.csv("../data/volatility.csv")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
+intc.option <- read.csv("~/GitHub/risk-mgmt-GroupX/data/intc-option.csv")
+xom.option <- read.csv("~/GitHub/risk-mgmt-GroupX/data/xom-option.csv")
 ```
 
 ### Step 2: Source function and files 
@@ -129,25 +131,25 @@ plotGraph(MES,XOM$date)
 # This part is allowed to set arbitrary inputs
 source("../code/portfolio_value.R")
 prices <- comb.col(s1,s2)
-price_date <- cbind.data.frame(XOM$date,prices)
-colnames(price_date) <- c("date","s1","s2")
 positions <- c("long","long") 
 wgt <- c(0.6,0.4)
-# wgt <- c(156/(156+200),200/(156+200))
-dRtn <- 5
-year <- 5
 v0 <- 10000
+
+# wgt <- c(156/(156+200),200/(156+200))
+# price_date <- cbind.data.frame(XOM$date,prices)
+# colnames(price_date) <- c("date","s1","s2")
 ```
 
 ```{r}
 port_value <- portfolio_px(prices,wgt,positions,v0)
 #estimated parameters of whole portfolio
-port_par1 <- winEstGBM(port_value,dRtn,year)    
+port_par1 <- winEstGBM(port_value,dRtn,year)
+
 #estimated parameters of each part and covariance matrix in portfolio
 port_par2 <- winEstGBM2(prices,dRtn,year)       
 
 shares <- v0*wgt/prices[1,]      #shares number of s1,s2 (notes:set shares number using the newest price)
-s0 <- prices[1,]            #price at start day(eg,1997-01-01)
+s0 <- prices[1,]                 #price at start day(eg,1997-01-01)
 mu <- port_par2$mu_gbm
 sigma <- port_par2$sigma_gbm
 rho <- port_par2$rho
@@ -175,6 +177,13 @@ PVaR_p1 <- parametricVaR(shares,s0,mu,sigma,rho,VaRp,dRtn,v0)
 plotGraph(rev(PVaR_p1),INTC$date)
 
 
+# Monte Carlo VaR1: portfolio follows GBM
+port_MVaR <- MCVaR(v0, port_par1$mu_gbm, port_par1$sigma_gbm, VaRp, npaths,year,dRtn)
+port_MES <- MCES(v0, port_par1$mu_gbm, port_par1$sigma_gbm, ESp, npaths,year,dRtn)
+plotGraph(port_MVaR,XOM$date)
+plotGraph(port_MES,XOM$date)
+
+
 # Monte Carlo (underlying stock follows GBM)
 MCVaR_p1 <- MCVaR_p(v0, port_par2$mu_gbm, port_par2$sigma, port_par2$rho,shares,VaRp, npaths,year,dRtn)
 plotGraph(MCVaR_p1,INTC$date)
@@ -189,12 +198,11 @@ add.col<-function(df, new.col) {
   cbind(df, new.col)
 }
 
-colnames(imp_vol) <- c("Dates","PX","IMP_VOL")
 
-imp_vol$Dates <- format(time(imp_vol$Dates))
-INTC$Dates <- format(time(INTC$Dates))
-
-merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
+intc.op <- intc.option[,c(1,7)]
+colnames(intc.op) <- c("date","Implied_Vol")
+intc.op$date <- as.Date(intc.op$date,"%m/%d/%y")
+option <- merge(INTC,intc.option,by="date")
 ```
 
 
