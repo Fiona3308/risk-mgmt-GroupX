@@ -194,6 +194,20 @@ plotGraph(MCVaR_p1,INTC$date)
 
 
 #### 4.2: Part 2: Portfolio = Stocks + Options
+Here, we only use one stock, a call option of the stock and a put option of the stock. 
+
+##### 4.2.0: Prepara Inputs
+```{r}
+wgt_s <- 0.9                            #weights of stocks in portfolio
+wgt_call <- 0.05                        #weights of call option in portfolio
+wgt_put <- 0.05                         #weights of put option in portfolio
+v0 <- 10000
+VaRp <- 0.99
+horizon <- 5
+year <- 1
+rf <- 0.005
+```
+
 ```{r}
 option <- function(option,price){
   option <- option[,c(1,ncol(option))]
@@ -206,6 +220,54 @@ option <- function(option,price){
 
 option1 <- option(xom.option,XOM)
 option2 <- option(intc.option,INTC)
+
+price1 <- option1$adjusted
+
+maturity1 <- 252                         #1 year
+maturity2 <- 252                         #1 year
+strike1 <- price1
+strike2 <- price1
+```
+
+```{r}
+iv1 <- option1$Implied_Vol
+iv2 <- option1$Implied_Vol
+
+putt <- Put(price1, strike1, rf, maturity1-horizon, iv1)
+calll <- Call(price1, strike2, rf, maturity2-horizon, iv2)
+
+nstocks <- wgt_s*v0/option1$adjusted[1]
+ncalls <- 0.05*v0/calll[1]
+nputs <- 0.05*v0/putt[1]
+
+mu <- par1$mu_gbm
+sigma <- par1$sigma_gbm
+npath <- 1000
+price0<- price1[length(price1)]
+s0 <- 10000
+```
+
+##### 4.2.1: Calculate Portfolio VaR&ES
+```{r}
+# Historical VaR&ES 
+OP_HVaR <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
+                     iv2, strike2, maturity2, ncalls, nputs,
+                     VaRp, horizon)
+plotGraph(OP_HVaR,option1$date)
+
+
+s0 <- price1
+# Parametric 
+OP_PVaR <- Option_ParametricVaR(price0,s0, mu, sigma, rf, nstocks, iv1, maturity1, 
+                      iv2, maturity2, ncalls, nputs,
+                      VaRp, horizon)
+plotGraph(OP_PVaR,option1$date)
+
+
+# Monte Carlo VaR&ES
+OP_MCVaR <- Option_MCVaR(s0, mu, sigma, rf, nstocks, iv1, maturity1, 
+                      iv2, maturity2, ncalls, nputs,VaRp, horizon, npath)
+plotGraph(OP_MCVaR,option1$date)
 ```
 
 
