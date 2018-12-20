@@ -30,25 +30,28 @@ imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 # calculate parameter for stocks/portfolio return
 source("../code/parameter/winEstGBM.R")
 source("../code/parameter/expEstGBM.R")
-source("../code/parameter/winEstGBM2.R")
+source("../code/parameter/winEstGBM2.R") #estimated parameters and rho for two stocks
 
 # historical VaR/ES
-source("../code/stock/HVaR.R")
-source("../code/stock/HES.R")
+source("../code/stock/HVaR.R") #for individual stock & two stocks
+source("../code/stock/HES.R")  #for individual stock & two stocks
 
 # monte carlo VaR/ES
-source("../code/stock/MC_update.R")
-source("../code/Put_MCVaR.R")
-source("../code/corrbmsampset.R")
+source("../code/stock/MC_update.R")  #for individual stock
+
+source("../code/corrbmsampset.R")   #generate random numbers of brownian motion
+source("../code/corrgbmsampset.R")  #for two stocks
 
 # Parametric VaR/ES
-source("../code/stock/gbmVaR.R")
-source("../code/stock/gbmES.R")
-source("../code/stocks_parametricVaR.R")
-source("../doc/calculation_measure.R")
+source("../code/stock/gbmVaR.R")  #for individual stock
+source("../code/stock/gbmES.R")   #for individual stock
+source("../code/stocks_parametricVaR.R") #for two stocks
 
 # plot graph
 source("../code/plotGraph.R")
+
+#others
+source("../doc/calculation_measure.R")
 
 # Backtest
 source("../code/BackTest.R")
@@ -153,24 +156,6 @@ merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
 ```
 
 
-To do list
-
-Portfolio
-1.Historical VaR (stocks+option)
-  a.how to calculate Profit & Loss?
-
-2.Parametric VaR (underlying stocks follow GBM)
-  a.two stocks + need revise the function,the plot seems not correct
-  b.3 stocks, how to construct covariance matrix?
-  c.stocks+options
-
-3.Monte Carlo VaR
-  a.two stocks(construct rho and w1,w2)
-  b.stocks+options
-  
-4. Backtest
-
-5. Documentation
 
 
 
@@ -198,6 +183,11 @@ stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Clo
 # useful in plot
 chartSeries(returns_AAPL)
 
+aple$Dates <- time(aple)
+aple$Dates <- as.Date(aple$Dates,"%m/%d/%Y")
+class(aple$Dates)
+head(aple)
+class(time(aple))
 ```
 
 
