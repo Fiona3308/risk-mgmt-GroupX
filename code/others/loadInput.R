@@ -1,15 +1,6 @@
 # load input matrics
-  
-s1 <- XOM$PX_LAST
-s2 <- INTC$PX_LAST
-
-comb.col <- function(dat1, dat2) {
-  n.row <- min(length(dat1),length(dat2))
-  length(dat1) <- n.row
-  length(dat2) <- n.row
-  cbind(dat1, dat2)
-}
-
+# s1 <- XOM$adjusted
+# s2 <- INTC$adjusted
 dRtn <- 5
 year <- 5
 v0 <- 10000

@@ -35,7 +35,7 @@
 # t <- 5/252 # horizon
 
 
-parametricVaR <- function(a,s0,mu,sigma,rho,p,t,v0){
+parametricVaR <- function(a,s0,mu,sigma,rho,p,dRtn,v0){
   
   # # v0
   # value <- 0 
@@ -48,6 +48,8 @@ parametricVaR <- function(a,s0,mu,sigma,rho,p,t,v0){
   # }else{
   #   v0 <- value
   # }
+  
+  t <- dRtn/252
   
   # E[vt]
   exp_vt <- 0
