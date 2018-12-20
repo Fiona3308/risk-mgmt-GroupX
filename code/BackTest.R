@@ -15,8 +15,9 @@ BackTest <- function(Prices,VaR,windowlen,S0){
       pricet[j] <- window_data[j+5]
       loss[j] <- S0 - pricet[j]*shares[j]
     }
+    exception[i] <- sum(loss>k)
   }
-  return(expection)
+  return(exception)
 }
 
 # BackTest <- function(Prices,VaR,windowlen,S0){
