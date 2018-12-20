@@ -19,8 +19,6 @@ if (!require("tidyquant")) {
     install.packages("tidyquant")
     library(tidyquant)
 }
-
-m <- tq_get("AAPL", get = "stock.prices")
 ```
 
 ```{r}
@@ -29,7 +27,6 @@ INTC <- read.csv("../data/INTC-bloomberg.csv")
 
 XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
 INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
-
 ```
 
 **Tickers**
