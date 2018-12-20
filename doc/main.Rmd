@@ -19,8 +19,6 @@ if (!require("tidyquant")) {
     install.packages("tidyquant")
     library(tidyquant)
 }
-
-m <- tq_get("AAPL", get = "stock.prices")
 ```
 
 ```{r}
