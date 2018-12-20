@@ -11,7 +11,7 @@ stock1 <- XOM$PX_LAST
 stock2 <- INTC$PX_LAST
 
 source("../code/parameter/winEstGBM2.R")
-source("../code/corrbmsampset.R")
+source("../code/corrbmsampset.R") #generate random numbers of pair brownian motion
 
 # inputs
 prices <- comb.col(stock1,stock2)

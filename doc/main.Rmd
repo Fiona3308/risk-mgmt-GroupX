@@ -23,14 +23,16 @@ if (!require("tidyquant")) {
 ```
 
 ```{r}
-XOM <- read.csv("../data/XOM-bloomberg.csv")
-INTC <- read.csv("../data/INTC-bloomberg.csv")
-
-XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
-INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
+# XOM <- read.csv("../data/XOM-bloomberg.csv")
+# INTC <- read.csv("../data/INTC-bloomberg.csv")
+# 
+# XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
+# INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
 ```
 
 **Tickers**
+
+Stock price is orderd from oldest to newest.
 ```{r}
 XOM <- tq_get("XOM", get = "stock.prices",from="1990-01-01")
 INTC <- tq_get("INTC", get = "stock.prices",from="1990-01-01")
@@ -42,7 +44,12 @@ imp_vol <- read.csv("../data/volatility.csv")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
-### Step 2: Source function and fiels 
+### Step 2: Source function and files 
+For the risk calculation system, we have three parts.
+
+* Part 1: Calculate the risk for individual stock
+* Part 2: Calculate the risk for portfolio that only including two stocks
+* Part 3: Calculate the risk for portfolio that including two stocks and two options
 ```{r}
 # calculate parameter for stocks/portfolio return
 source("../code/parameter/winEstGBM.R")
@@ -56,7 +63,7 @@ source("../code/stock/HES.R")  #for individual stock & two stocks
 # monte carlo VaR/ES
 source("../code/stock/MC_update.R")  #for individual stock
 
-source("../code/corrbmsampset.R")   #generate random numbers of brownian motion
+source("../code/corrbmsampset.R")   #generate random numbers of pair brownian motion
 source("../code/corrgbmsampset.R")  #for two stocks
 
 # Parametric VaR/ES
@@ -83,16 +90,21 @@ s1 <- XOM$adjusted
 s2 <- INTC$adjusted
 dRtn <- 5                                #horizon for day,eg:5 day VaR
 year <- 5                                #window length, 5 years
-par1 <- winEstGBM(s1,dRtn,year)          #estimated mu and sigma of stock prices
+par1 <- winEstGBM(s1,dRtn,year)          #estimated mu and sigma of stock price
 par2 <- winEstGBM(s2,dRtn,year)
 s0 <- 10000                              #$10,000 dollar position each day
+VaRp <- 0.99
+ESp <- 0.95
 ```
 
 #### 3.1: Calculate Individual Stock VaR
 ```{r,warning=FALSE}
-# historical VaR  
-Hvar <- HVaR_S(s1,0.99,dRtn,year,s0)
+# historical VaR&ES
+Hvar <- HVaR_S(s1,VaRp,dRtn,year,s0)
+Hes <- ES_S(s1,ESp,dRtn,year,s0)
+
 plotGraph(Hvar,XOM$date)
+plotGraph(Hes,XOM$date)
 
 # paramentric VaR
 Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,dRtn)
