@@ -23,7 +23,7 @@ if (!require("tidyquant")) {
 m <- tq_get("AAPL", get = "stock.prices")
 ```
 
-```{}
+```{r}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
 INTC <- read.csv("../data/INTC-bloomberg.csv")
 
