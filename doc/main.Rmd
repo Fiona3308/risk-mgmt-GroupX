@@ -55,18 +55,21 @@ source("../code/parameter/winEstGBM2.R") #estimated parameters and rho for two s
 
 ```{r}
 # historical VaR&ES
-source("../code/stock/HVaR.R") #for individual stock & two stocks
-source("../code/stock/HES.R")  #for individual stock & two stocks
+source("../code/stock/HVaR.R")        #for individual stock & portfolio1 two stocks
+source("../code/stock/HES.R")         #for individual stock & portfolio1 two stocks
+source("../code/Option_HVaR.R")       #for portfolio2 stock+options
 
 
 # monte carlo VaR&ES
 source("../code/stock/MC_update.R")  #for individual stock
-source("../code/corrgbmsampset.R")  #for portfolio1 two stocks
+source("../code/corrgbmsampset.R")   #for portfolio1 two stocks
+source("../code/Option_MVaR.R")      #for portfolio2 stock+options
 
 # Parametric VaR&ES
-source("../code/stock/gbmVaR.R")  #for individual stock
-source("../code/stock/gbmES.R")   #for individual stock
-source("../code/stocks_parametricVaR.R") #for two stocks
+source("../code/stock/gbmVaR.R")         #for individual stock
+source("../code/stock/gbmES.R")          #for individual stock
+source("../code/stocks_parametricVaR.R") #for portfolio1 two stocks
+source("../code/Option_ParametricVaR.R") #for portfolio2 stock+options
 
 # plot graph
 source("../code/plotGraph.R")

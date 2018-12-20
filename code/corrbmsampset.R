@@ -22,5 +22,4 @@ corrbmsampset <- function(dt,k,mu_gbm,rho){
   return(bm)
 }
 
-# ll <- corrbmsampset(1/252,1000,mm$mu_gbm,mm$rho)
 
