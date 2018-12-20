@@ -23,13 +23,12 @@ if (!require("tidyquant")) {
 m <- tq_get("AAPL", get = "stock.prices")
 ```
 
-```{r}
+```{}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
 INTC <- read.csv("../data/INTC-bloomberg.csv")
 
 XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
 INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
-
 ```
 
 **Tickers**
