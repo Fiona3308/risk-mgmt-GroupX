@@ -2,16 +2,12 @@
 # sigma: matrix
 # s0: matrix
 
-
-# stock1Shares <- 156
-# stock2Shares <- 200
 library(MASS)
-
-stock1 <- XOM$PX_LAST
-stock2 <- INTC$PX_LAST
-
 source("../code/parameter/winEstGBM2.R")
 source("../code/corrbmsampset.R") #generate random numbers of pair brownian motion
+
+stock1 <- XOM$adjusted
+stock2 <- INTC$adjusted
 
 # inputs
 prices <- comb.col(stock1,stock2)

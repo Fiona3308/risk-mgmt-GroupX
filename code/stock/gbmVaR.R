@@ -1,7 +1,7 @@
 gbmVaR <- function(v0,mu,sigma,p,t){
   #v0 = Initial portfolio value
-  #mu = Drift
-  #sigma = Volatility.
+  #mu = Drift of prices
+  #sigma = Volatility of prices
   #p = Percentile at which to compute VaR.
   #t = Horizon at which to compute VaR (in years).(eg.1/252)
   #VaR = VaR of portfolio (Assumes portfolio follows GBM)
