@@ -83,6 +83,7 @@ source("../code/BackTest.R")
 ### Step 3: Individual Stock Analysis
 
 #### 3.0: Prepare Inputs
+This part allows users to set arbitrary inputs.
 ```{r}
 s1 <- XOM$adjusted
 s2 <- INTC$adjusted
@@ -93,7 +94,6 @@ par2 <- winEstGBM(s2,dRtn,year)
 s0 <- 10000                              #$10,000 dollar position each day
 VaRp <- 0.99
 ESp <- 0.95
-
 npaths <- 10000
 ```
 
@@ -122,12 +122,12 @@ plotGraph(MES,XOM$date)
 ### Step 4: Portfolio Analysis
 
 #### 4.1: Part 1: Portfolio = weight1*s1 + weight2*s2
-##### 4.1.1: Prepare Inputs
+##### 4.1.0: Prepare Inputs
 ```{r}
 # Inputs Preparation
 source("../code/portfolio_price.R")
 
-prices <- comb.col(XOM$PX_LAST,INTC$PX_LAST)
+prices <- comb.col(s1,s2)
 wgt <- c(156/(156+200),200/(156+200))
 positions <- c("long","long") 
 
@@ -139,7 +139,13 @@ portfolio_price <- portfolio_px(prices,wgt,positions,v0)
 par_p <- winEstGBM(portfolio_price,dRtn,year)
 ```
 
-##### 4.1.2: Calculate Portfolio VaR
+```{r}
+
+```
+
+
+
+##### 4.1.1: Calculate Portfolio VaR
 ```{r}
 # Historical VaR 
 port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,v0)
