@@ -7,7 +7,7 @@ output: html_notebook
 
 ### Step 1: Load Data (Equities in Portfolio)
 We download our data from "Yahoo Finance" by using "tidyquant" package. Users can choose any tickers they want.
-Here,for mathematical descriptions of model, we use "XOM"&"INTC" as example.
+Here,for mathematical descriptions of model, we use "XOM"&"INTC" as example.Users can replace all the "XOM"&"INTC" in this Rmd file with tickers they want.
 ```{r,message=FALSE}
 library(ggplot2)
 library(MASS)
@@ -97,7 +97,7 @@ ESp <- 0.95
 npaths <- 10000
 ```
 
-#### 3.1: Calculate Individual Stock VaR
+#### 3.1: Calculate Individual Stock VaR&ES
 ```{r,warning=FALSE}
 # historical VaR&ES
 Hvar <- HVaR_S(s1,VaRp,dRtn,year,s0)
@@ -124,44 +124,40 @@ plotGraph(MES,XOM$date)
 #### 4.1: Part 1: Portfolio = weight1*s1 + weight2*s2
 ##### 4.1.0: Prepare Inputs
 ```{r}
-# Inputs Preparation
-source("../code/portfolio_price.R")
-
+source("../code/portfolio_value.R")
 prices <- comb.col(s1,s2)
-wgt <- c(156/(156+200),200/(156+200))
 positions <- c("long","long") 
-
+wgt <- c(0.6,0.4)
+# wgt <- c(156/(156+200),200/(156+200))
 dRtn <- 5
 year <- 5
 v0 <- 10000
 
-portfolio_price <- portfolio_px(prices,wgt,positions,v0)
-par_p <- winEstGBM(portfolio_price,dRtn,year)
+port_value <- portfolio_px(prices,wgt,positions,v0)
+par_p <- winEstGBM(port_value,dRtn,year)
 ```
 
-```{r}
-
-```
-
-
-
-##### 4.1.1: Calculate Portfolio VaR
+##### 4.1.1: Calculate Portfolio VaR&ES
 ```{r}
 # Historical VaR 
-port_Hvar <- HVaR_S(portfolio_price,0.99,dRtn,year,v0)
-plotGraph(port_Hvar,INTC$Dates)
+port_Hvar <- HVaR_S(port_value,VaRp,dRtn,year,v0)
+plotGraph(port_Hvar,XOM$date)
 
-# Parametric VaR portfolio follows GBM
-Gvar <- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,0.99,dRtn)
-plotGraph(Gvar,INTC$Dates)
 
-# Parametric VaR underlying follows GBM
+# Parametric VaR1: portfolio follows GBM
+Gvar <- gbmVaR(v0,par_p$mu_gbm,par_p$sigma_gbm,VaRp,dRtn)
+plotGraph(Gvar,XOM$date)
+
+
+# Parametric VaR2: underlying follows GBM
 #-- need to revise all code in this part including inputs --#
 source("../doc/loadInput.R")
-PVaR <- parametricVaR(a,s0,mu,sigma,rho,p,t,v0)
-plotGraph(PVaR,INTC$Dates)
+PVaR <- parametricVaR(a,s0,mu,sigma,rho,VaRp,t,v0)
+plotGraph(PVaR,INTC$date)
 
-# Monte Carlo (more than 2 stocks situations)
+
+# Monte Carlo
+
 ```
 
 
