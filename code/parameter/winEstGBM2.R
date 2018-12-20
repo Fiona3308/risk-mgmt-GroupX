@@ -21,8 +21,8 @@ comb.col <- function(dat1, dat2) {
   length(dat2) <- n.row
   cbind(dat1, dat2)
 }
-
-prices <- comb.col(s1,s2)
+# 
+# prices <- comb.col(s1,s2)
 
 winEstGBM2 <- function(prices,dRtn,year){
   wid_len <- year*252
