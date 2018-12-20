@@ -259,30 +259,30 @@ s0 <- 10000
 
 ##### 4.2.1: Calculate Portfolio VaR&ES
 ```{r,warning=FALSE}
-# Historical VaR&ES 
-OP_HVaR <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
-                     iv2, strike2, maturity2, ncalls, nputs,
-                     VaRp, horizon)
-
-OP_HES <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
-                     iv2, strike2, maturity2, ncalls, nputs,
-                     ESp, horizon)
-plotGraph(OP_HVaR,option1$date)
-plotGraph(OP_HES,option1$date)
-
-
-# Parametric 
-# s0 <- price1
-OP_PVaR <- Option_ParametricVaR(price0,s0, mu, sigma, rf, nstocks, iv1, maturity1, 
-                      iv2, maturity2, ncalls, nputs,
-                      VaRp, horizon)
-plotGraph(OP_PVaR,option1$date)
-
-
-# Monte Carlo VaR&ES
-OP_MCVaR <- Option_MCVaR(s0, mu, sigma, rf, nstocks, iv1, maturity1, 
-                      iv2, maturity2, ncalls, nputs,VaRp, horizon, npath)
-plotGraph(OP_MCVaR,option1$date)
+# # Historical VaR&ES 
+# OP_HVaR <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
+#                      iv2, strike2, maturity2, ncalls, nputs,
+#                      VaRp, horizon)
+# 
+# OP_HES <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
+#                      iv2, strike2, maturity2, ncalls, nputs,
+#                      ESp, horizon)
+# plotGraph(OP_HVaR,option1$date)
+# plotGraph(OP_HES,option1$date)
+# 
+# 
+# # Parametric 
+# # s0 <- price1
+# OP_PVaR <- Option_ParametricVaR(price0,s0, mu, sigma, rf, nstocks, iv1, maturity1, 
+#                       iv2, maturity2, ncalls, nputs,
+#                       VaRp, horizon)
+# plotGraph(OP_PVaR,option1$date)
+# 
+# 
+# # Monte Carlo VaR&ES
+# OP_MCVaR <- Option_MCVaR(s0, mu, sigma, rf, nstocks, iv1, maturity1, 
+#                       iv2, maturity2, ncalls, nputs,VaRp, horizon, npath)
+# plotGraph(OP_MCVaR,option1$date)
 ```
 
 ### Step 5: Back Test
@@ -345,28 +345,28 @@ legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
 #### 5.3: Two stocks + two options in the portfolio
 ```{r}
 # Historical VaR&ES 
-BT1<-BackTest(s1,OP_HVaR,1,10000)
-BTplot(BT1,XOM$date)
-Loss1<-Loss(s1,OP_HVaR,1,10000)
-plot(XOM$date[1:length(Loss1[,1])],Loss1[,1],type="l",col="2",xlab = "Date",ylab = "")
-lines(XOM$date[1:length(Loss1[,1])],Loss1[,2],y=,type="l",col="3")
-legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
-
-
-# Parametric 
-BT2<-BackTest(s1,OP_PVaR ,1,10000)
-BTplot(BT2,XOM$date)
-Loss2<-Loss(s1,OP_PVaR ,1,10000)
-plot(XOM$date[1:length(Loss2[,1])],Loss2[,1],type="l",col="2",xlab = "Date",ylab = "")
-lines(XOM$date[1:length(Loss2[,1])],Loss2[,2],y=,type="l",col="3")
-legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
-
-# Monte Carlo VaR&ES
-OP_MCVaR
-BT3<-BackTest(s1,OP_MCVaR,1,10000)
-BTplot(BT3,XOM$date)
-Loss3<-Loss(s1,OP_PVaR ,1,10000)
-plot(XOM$date[1:length(Loss3[,1])],Loss3[,1],type="l",col="2",xlab = "Date",ylab = "")
-lines(XOM$date[1:length(Loss3[,1])],Loss3[,2],y=,type="l",col="3")
-legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+# BT1<-BackTest(s1,OP_HVaR,1,10000)
+# BTplot(BT1,XOM$date)
+# Loss1<-Loss(s1,OP_HVaR,1,10000)
+# plot(XOM$date[1:length(Loss1[,1])],Loss1[,1],type="l",col="2",xlab = "Date",ylab = "")
+# lines(XOM$date[1:length(Loss1[,1])],Loss1[,2],y=,type="l",col="3")
+# legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+# 
+# 
+# # Parametric 
+# BT2<-BackTest(s1,OP_PVaR ,1,10000)
+# BTplot(BT2,XOM$date)
+# Loss2<-Loss(s1,OP_PVaR ,1,10000)
+# plot(XOM$date[1:length(Loss2[,1])],Loss2[,1],type="l",col="2",xlab = "Date",ylab = "")
+# lines(XOM$date[1:length(Loss2[,1])],Loss2[,2],y=,type="l",col="3")
+# legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+# 
+# # Monte Carlo VaR&ES
+# OP_MCVaR
+# BT3<-BackTest(s1,OP_MCVaR,1,10000)
+# BTplot(BT3,XOM$date)
+# Loss3<-Loss(s1,OP_PVaR ,1,10000)
+# plot(XOM$date[1:length(Loss3[,1])],Loss3[,1],type="l",col="2",xlab = "Date",ylab = "")
+# lines(XOM$date[1:length(Loss3[,1])],Loss3[,2],y=,type="l",col="3")
+# legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
 ```
