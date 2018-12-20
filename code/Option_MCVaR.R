@@ -25,11 +25,11 @@ Option_MCVaR <- function(s0, mu, sigma, rf, nstocks, iv1, maturity1,
 }
 
 
-mu <- par1$mu_gbm
-sigma <- par1$sigma_gbm
-
-
-Option_MCVaR(s0, mu, sigma, rf, nstocks, iv1, strike1, maturity1, 
-                      iv2, strike2, maturity2, ncalls, nputs,
-                      VaRp, horizon, npath)
+# mu <- par1$mu_gbm
+# sigma <- par1$sigma_gbm
+# 
+# 
+# Option_MCVaR(s0, mu, sigma, rf, nstocks, iv1, strike1, maturity1, 
+#                       iv2, strike2, maturity2, ncalls, nputs,
+#                       VaRp, horizon, npath)
 

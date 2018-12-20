@@ -1,7 +1,12 @@
-
 ---
-title: "GR5320 Project"
-output: html_notebook
+title: "GR5320_Project"
+author: "Tianyao Xu(tx2167),Xiaojie Wei(xw2536), YanziShen(ys3088)"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
 
 
@@ -67,7 +72,7 @@ source("../code/Option_HVaR.R")       #for portfolio2 stock+options
 # monte carlo VaR&ES
 source("../code/stock/MC_update.R")  #for individual stock
 source("../code/corrgbmsampset.R")   #for portfolio1 two stocks
-source("../code/Option_MVaR.R")      #for portfolio2 stock+options
+source("../code/Option_MCVaR.R")      #for portfolio2 stock+options
 
 # Parametric VaR&ES
 source("../code/stock/gbmVaR.R")         #for individual stock
@@ -77,6 +82,7 @@ source("../code/Option_ParametricVaR.R") #for portfolio2 stock+options
 
 # plot graph
 source("../code/plotGraph.R")
+source("../code/BTplot.R")
 
 #others
 source("../doc/calculation_measure.R")
@@ -84,6 +90,7 @@ source("../code/BlackScholesOption.R")
 
 # Backtest
 source("../code/BackTest.R")
+source("../code/Loss.R")
 ```
 
 
@@ -107,10 +114,10 @@ npaths <- 10000
 #### 3.1: Calculate Individual Stock VaR&ES
 ```{r,warning=FALSE}
 # historical VaR&ES
-Hvar <- HVaR_S(s1,VaRp,dRtn,year,s0)
-Hes <- ES_S(s1,ESp,dRtn,year,s0)
-plotGraph(Hvar,XOM$date)
-plotGraph(Hes,XOM$date)
+HVaR <- HVaR_S(s1,VaRp,dRtn,year,s0)
+HES <- ES_S(s1,ESp,dRtn,year,s0)
+plotGraph(HVaR,XOM$date)
+plotGraph(HES,XOM$date)
 
 # paramentric VaR
 GVaR <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,VaRp,dRtn)
@@ -145,6 +152,7 @@ v0 <- 10000
 
 ```{r}
 port_value <- portfolio_px(prices,wgt,positions,v0)
+
 #estimated parameters of whole portfolio
 port_par1 <- winEstGBM(port_value,dRtn,year)
 
@@ -163,6 +171,7 @@ rho <- port_par2$rho
 # Historical VaR&ES 
 port_HVaR <- HVaR_S(port_value,VaRp,dRtn,year,v0)
 port_HES <- ES_S(port_value,ESp,dRtn,year,v0)
+
 #here,using XOM date for plot because the date of portfolio is same with XOM and INTC
 plotGraph(port_HVaR,XOM$date)
 plotGraph(port_HES,XOM$date)
@@ -177,7 +186,7 @@ plotGraph(GES_p1,XOM$date)
 
 # Parametric VaR2: underlying stock follows GBM
 PVaR_p1 <- parametricVaR(shares,s0,mu,sigma,rho,VaRp,dRtn,v0)
-plotGraph(rev(PVaR_p1),INTC$date)
+plotGraph(PVaR_p1,INTC$date)
 
 
 # Monte Carlo VaR1: portfolio follows GBM
@@ -188,8 +197,8 @@ plotGraph(port_MES,XOM$date)
 
 
 # Monte Carlo (underlying stock follows GBM)
-MCVaR_p1 <- MCVaR_p(v0, port_par2$mu_gbm, port_par2$sigma, port_par2$rho,shares,VaRp, npaths,year,dRtn)
-plotGraph(MCVaR_p1,INTC$date)
+# MCVaR_p1 <- MCVaR_p(v0, port_par2$mu_gbm, port_par2$sigma, port_par2$rho,shares,VaRp, npaths,year,dRtn)
+# plotGraph(MCVaR_p1,INTC$date)
 ```
 
 
@@ -248,16 +257,21 @@ s0 <- 10000
 ```
 
 ##### 4.2.1: Calculate Portfolio VaR&ES
-```{r}
+```{r,warning=FALSE}
 # Historical VaR&ES 
 OP_HVaR <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
                      iv2, strike2, maturity2, ncalls, nputs,
                      VaRp, horizon)
+
+OP_HES <- Option_HVaR(price1, price1, year, rf, nstocks, iv1, strike1, maturity1,
+                     iv2, strike2, maturity2, ncalls, nputs,
+                     ESp, horizon)
 plotGraph(OP_HVaR,option1$date)
+plotGraph(OP_HES,option1$date)
 
 
-s0 <- price1
 # Parametric 
+# s0 <- price1
 OP_PVaR <- Option_ParametricVaR(price0,s0, mu, sigma, rf, nstocks, iv1, maturity1, 
                       iv2, maturity2, ncalls, nputs,
                       VaRp, horizon)
@@ -274,12 +288,49 @@ plotGraph(OP_MCVaR,option1$date)
 ### Step 5: Back Test
 
 #### 5.1: Individual Stock
-```{r}
-#Backtest
-BT<-BackTest(s1,Gvar,5,10000)
-plotGraph(BT,XOM$date)
+```{r,warning=FALSE}
+#Backtest of parametric VaR
+GBT<-BackTest(s1,GVaR,1,10000)
+BTplot(GBT,XOM$date)
+GLoss<-Loss(s1,GVaR,1,10000)
+plot(XOM$date[1:length(GLoss[,1])],GLoss[,1],type="l",col="2",xlab = "Date",ylab = "")
+lines(XOM$date[1:length(GLoss[,1])],GLoss[,2],y=,type="l",col="3")
+legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+
+#Backtest of Monte Carlo VaR
+MBT<-BackTest(s1,MVaR,1,10000)
+BTplot(MBT,XOM$date)
+MLoss<-Loss(s1,MVaR,1,10000)
+plot(XOM$date[1:length(GLoss[,1])],MLoss[,1],type="l",col="2",xlab = "Date",ylab = "")
+lines(XOM$date[1:length(GLoss[,1])],MLoss[,2],y=,type="l",col="3")
+legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
 ```
 
 #### 5.2: Two stocks in the portfolio
+```{r, warning=FALSE}
+#Backtest of Parametric VaR portfolio follows GBM
+GBT_p1<-BackTest(port_value,GVaR_p1,1,10000)
+BTplot(GBT_p1,XOM$date)
+GLoss_p1<-Loss(port_value,GVaR_p1,1,10000)
+plot(XOM$date[1:length(GLoss_p1[,1])],GLoss_p1[,1],type="l",col="2",xlab = "Date",ylab = "")
+lines(XOM$date[1:length(GLoss_p1[,1])],GLoss_p1[,2],y=,type="l",col="3")
+legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
 
-#### 5.3: Two stocks + two options in the portfolio
+#Back Test of  Parametric VaR underlying follows GBM
+PBT_p1<-BackTest(port_value,PVaR_p1,1,10000)
+BTplot(PBT_p1,XOM$date)
+PLoss_p1<-Loss(port_value,PVaR_p1,1,10000)
+plot(XOM$date[1:length(PLoss_p1[,1])],PLoss_p1[,1],type="l",col="2",xlab = "Date",ylab = "")
+lines(XOM$date[1:length(PLoss_p1[,1])],PLoss_p1[,2],y=,type="l",col="3")
+legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+
+#Back Test of  Monte Carlo VaR portfolio follows GBM
+MBT_port<-BackTest(port_value,port_MVaR,1,10000)
+BTplot(MBT_port,XOM$date)
+MLoss_port<-Loss(port_value,port_MVaR,1,10000)
+plot(XOM$date[1:length(MLoss_port[,1])],MLoss_port[,1],type="l",col="2",xlab = "Date",ylab = "")
+lines(XOM$date[1:length(MLoss_port[,1])],MLoss_port[,2],y=,type="l",col="3")
+legend("topright",legend=c("Actual loss","vaR"),col=2:3,lty=1)
+
+#Back Test of  Monte Carlo VaR underlying follows GBM
+MBT_
