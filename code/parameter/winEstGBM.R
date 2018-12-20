@@ -3,7 +3,7 @@ winEstGBM <- function(prices,dRtn,year){
   # dRtn = 1/5/10 days return
   # wid_len = years*252
   wid_len <- year*252
-  rtn <- -diff(log(prices),dRtn)   # log returns of stock price  
+  rtn <- diff(log(prices),dRtn)   # log returns of stock price  
   period <- length(rtn)-wid_len    # period for loop 
   mu_bar <- NA                     # mean of log returns
   var_bar <- NA                    # standard deviation of log returns

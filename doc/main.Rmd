@@ -4,24 +4,43 @@ output: html_notebook
 ---
 
 
-### Step 1: Load Data
+### Step 1: Load Data (Equities in Portfolio)
+We download our data from "Yahoo Finance" by using "tidyquant" package. Users can choose any tickers they want.
+Here,for mathematical descriptions of model, we use "XOM"&"INTC" as example.
 ```{r,message=FALSE}
 library(ggplot2)
+library(MASS)
 library(quantmod)
 if (!require("quantmod")) {
     install.packages("quantmod")
     library(quantmod)
 }
-library(MASS)
+if (!require("tidyquant")) {
+    install.packages("tidyquant")
+    library(tidyquant)
+}
+
+m <- tq_get("AAPL", get = "stock.prices")
 ```
 
 ```{r}
 XOM <- read.csv("../data/XOM-bloomberg.csv")
 INTC <- read.csv("../data/INTC-bloomberg.csv")
-imp_vol <- read.csv("../data/volatility.csv")
 
 XOM$Dates <- as.Date(XOM$Dates,"%m/%d/%Y")
 INTC$Dates <- as.Date(INTC$Dates,"%m/%d/%Y")
+
+```
+
+**Tickers**
+```{r}
+XOM <- tq_get("XOM", get = "stock.prices",from="1990-01-01")
+INTC <- tq_get("INTC", get = "stock.prices",from="1990-01-01")
+```
+
+**Options**
+```{r}
+imp_vol <- read.csv("../data/volatility.csv")
 imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
@@ -62,25 +81,27 @@ source("../code/BackTest.R")
 
 #### 3.0: Prepare Inputs
 ```{r}
-s1 <- XOM$PX_LAST
-s2 <- INTC$PX_LAST
-dRtn <- 5
-year <- 5
-par1 <- winEstGBM(s1,dRtn,year)
+s1 <- XOM$adjusted
+s2 <- INTC$adjusted
+dRtn <- 5                                #horizon for day,eg:5 day VaR
+year <- 5                                #window length, 5 years
+par1 <- winEstGBM(s1,dRtn,year)          #estimated mu and sigma of stock prices
 par2 <- winEstGBM(s2,dRtn,year)
-s0 <- 10000
+s0 <- 10000                              #$10,000 dollar position each day
 ```
 
 #### 3.1: Calculate Individual Stock VaR
 ```{r,warning=FALSE}
 # historical VaR  
 Hvar <- HVaR_S(s1,0.99,dRtn,year,s0)
-plotGraph(Hvar,XOM$Dates)
-
+plotGraph(Hvar,XOM$date)
 
 # paramentric VaR
 Gvar <- gbmVaR(s0,par1$mu_gbm,par1$sigma_gbm,0.99,dRtn)
-plotGraph(Gvar,XOM$Dates)
+plotGraph(Hvar,XOM$date)
+plotGraph(Gvar,XOM$date)
+plotGraph(MVaR,XOM$date)
+
 #Backtest
 BT<-BackTest(s1,Gvar,5,10000)
 plotGraph(BT,XOM$Dates)
@@ -88,7 +109,7 @@ plotGraph(BT,XOM$Dates)
 
 # Monte Carlo VaR
 MVaR <- MCVaR(s0, par1$mu_gbm, par1$sigma_gbm, p, dt, npaths,years,dRtn)
-plotGraph(MVaR,XOM$Dates)
+plotGraph(MVaR,XOM$date)
 ```
 
 
@@ -149,13 +170,16 @@ merge(imp_vol,INTC[,c(1,6)],by= "Dates",all = T)
 ```
 
 
-
 ```{r}
 # Inputs Preparation
 
 ```
 
 
+Step 5: Back Test
+```{r}
+
+```
 
 
 
@@ -169,10 +193,7 @@ Step:test part
 ```{r}
 # one approach to load stock dataset
 start <- as.Date("2010-01-01")
-end <- as.Date("2018-10-01")
 
-getSymbols("AAPL", src = "yahoo", from = start, to = end)
-getSymbols(c("MSFT", "GOOG"), src = "yahoo", from = start, to = end)
 
 aple <- Ad(getSymbols("AAPL", src = "yahoo", auto.assign= F, from = start))
 intc <- Ad(getSymbols("INTC", src = "yahoo", auto.assign= F, from = start))
@@ -183,11 +204,10 @@ stocks <- as.xts(data.frame(AAPL = AAPL[, "AAPL.Close"], MSFT = MSFT[, "MSFT.Clo
 # useful in plot
 chartSeries(returns_AAPL)
 
-aple$Dates <- time(aple)
-aple$Dates <- as.Date(aple$Dates,"%m/%d/%Y")
-class(aple$Dates)
-head(aple)
-class(time(aple))
-```
 
+dates <- format(time(aple),"%Y-%m-%d")
+aple <- data.frame(dates,aple)
+length(aple)
+length(aple)
+```
 
