@@ -1,8 +1,9 @@
-# Parameters of the portfolio (including two stocks)
+# Parameters of the portfolio (only include two stocks)
+
 # Output: mu and sigma of each stock in the portfolio, rho of two stocks
 
 # Inputs:
-#   prices=vector of daily historical prices, from newest to oldest
+#   prices=vector of daily historical prices, from oldest to newest
 #   year=#of year when rolling window
 #   win_len=length of window to use in estimation (in days)
 #   

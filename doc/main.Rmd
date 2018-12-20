@@ -45,7 +45,7 @@ imp_vol$Date <- as.Date(imp_vol$Date,"%m/%d/%Y")
 ```
 
 ### Step 2: Source function and files 
-For the risk calculation system, we have three parts.
+For the risk calculation system, we have three parts:
 
 * Part 1: Calculate the risk for individual stock
 * Part 2: Calculate the risk for portfolio that only including two stocks

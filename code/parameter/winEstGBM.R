@@ -1,7 +1,6 @@
 winEstGBM <- function(prices,dRtn,year){
   # prices = stock prices
   # dRtn = 1/5/10 days return
-  # wid_len = years*252
   wid_len <- year*252
   rtn <- diff(log(prices),dRtn)   # log returns of stock price  
   period <- length(rtn)-wid_len    # period for loop 
