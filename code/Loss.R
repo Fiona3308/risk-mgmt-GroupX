@@ -8,6 +8,6 @@ Loss <- function(Prices,VaR,windowlen,S0){
       pricet[i] <- Prices[i+5]
       loss[i] <- S0 - pricet[i]*shares[i]
     }
-  return(cbind(loss,VaR[length(VaR)-252*windowlen-5]))
+  return(cbind(loss,VaR[1:(length(VaR)-252*windowlen-5)]))
 }
  
