@@ -80,31 +80,3 @@ parametricVaR <- function(a,s0,mu,sigma,rho,p,dRtn,v0){
 
   return(VaR)
 }
-
-######################################
-# s1 <- XOM$PX_LAST
-# s2 <- INTC$PX_LAST
-# s1_0 <- 32.0625 #XOM
-# s2_0 <- 25.0156 #INTC
-# mu1 <- par1$mu_gbm[1:7000]
-# mu2 <- par2$mu_gbm[1:7000]
-# sigma1 <- par1$sigma_gbm[1:7000]
-# sigma2 <- par2$sigma_gbm[1:7000]
-# a <- c(156,200)  # if we only assign weights to each component of portfolio? how to decide position here?
-# s0 <- c(s1_0,s2_0)  # what's s1_0 and s2_0 here, is the dailty stock price?
-# v0 = FALSE
-# mu <- c(mu1,mu2)
-# sigma <- c(sigma1,sigma2)
-# datadt <- 1/252
-# rtn1 <- -diff(log(s1),1)
-# rtn2 <- -diff(log(s2),1)
-# rtn1 <- rtn1[1:7000]
-# rtn2 <- rtn2[1:7000]
-# rho <- cov(rtn1,rtn2)/datadt/(sigma1*sigma2)
-# t <- 5/252 
-# p <- 0.99
-# 
-# test <- parametricVaR(a,s0,mu,sigma,rho,p,t)
-# View(test)
-# datet=INTC$Dates[1:7000]
-# plot(datet,test,type="l")

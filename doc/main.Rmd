@@ -61,8 +61,7 @@ source("../code/stock/HES.R")  #for individual stock & two stocks
 
 # monte carlo VaR&ES
 source("../code/stock/MC_update.R")  #for individual stock
-
-source("../code/corrgbmsampset.R")  #for two stocks
+source("../code/corrgbmsampset.R")  #for portfolio1 two stocks
 
 # Parametric VaR&ES
 source("../code/stock/gbmVaR.R")  #for individual stock
@@ -124,6 +123,7 @@ plotGraph(MES,XOM$date)
 #### 4.1: Part 1: Portfolio = weight1*s1 + weight2*s2
 ##### 4.1.0: Prepare Inputs
 ```{r}
+# This part is allowed to set arbitrary inputs
 source("../code/portfolio_value.R")
 prices <- comb.col(s1,s2)
 price_date <- cbind.data.frame(XOM$date,prices)
@@ -143,10 +143,8 @@ port_par1 <- winEstGBM(port_value,dRtn,year)
 #estimated parameters of each part and covariance matrix in portfolio
 port_par2 <- winEstGBM2(prices,dRtn,year)       
 
-
-# a <- v0*wgt/price_date[nrow(price_date),c(2,3)]
-a <- v0*wgt/prices[1,]
-s0 <- prices[1,]
+shares <- v0*wgt/prices[1,]      #shares number of s1,s2 (notes:set shares number using the newest price)
+s0 <- prices[1,]            #price at start day(eg,1997-01-01)
 mu <- port_par2$mu_gbm
 sigma <- port_par2$sigma_gbm
 rho <- port_par2$rho
@@ -154,7 +152,7 @@ rho <- port_par2$rho
 
 ##### 4.1.1: Calculate Portfolio VaR&ES
 ```{r}
-# Historical VaR 
+# Historical VaR&ES 
 port_HVaR <- HVaR_S(port_value,VaRp,dRtn,year,v0)
 port_HES <- ES_S(port_value,ESp,dRtn,year,v0)
 #here,using XOM date for plot because the date of portfolio is same with XOM and INTC
@@ -162,21 +160,21 @@ plotGraph(port_HVaR,XOM$date)
 plotGraph(port_HES,XOM$date)
 
 
-# Parametric VaR1: portfolio follows GBM
-GVaR <- gbmVaR(v0,port_par1$mu_gbm,port_par1$sigma_gbm,VaRp,dRtn)
-GES <- gbmES(v0,port_par1$mu_gbm,port_par1$sigma_gbm,ESp,dRtn)
-plotGraph(GVaR,XOM$date)
-plotGraph(GES,XOM$date)
+# Parametric VaR1(&ES): portfolio follows GBM
+GVaR_p1 <- gbmVaR(v0,port_par1$mu_gbm,port_par1$sigma_gbm,VaRp,dRtn)
+GES_p1 <- gbmES(v0,port_par1$mu_gbm,port_par1$sigma_gbm,ESp,dRtn)
+plotGraph(GVaR_p1,XOM$date)
+plotGraph(GES_p1,XOM$date)
 
 
 # Parametric VaR2: underlying stock follows GBM
-#-- need to revise all code in this part including inputs --#
-PVaR <- parametricVaR(a,s0,mu,sigma,rho,VaRp,dRtn,v0)
-plotGraph(PVaR,INTC$date)
+PVaR_p1 <- parametricVaR(shares,s0,mu,sigma,rho,VaRp,dRtn,v0)
+plotGraph(rev(PVaR_p1),INTC$date)
 
 
-# Monte Carlo
-
+# Monte Carlo (underlying stock follows GBM)
+MCVaR_p1 <- MCVaR_p(v0, port_par2$mu_gbm, port_par2$sigma, port_par2$rho,shares,VaRp, npaths,year,dRtn)
+plotGraph(MCVaR_p1,INTC$date)
 ```
 
 
