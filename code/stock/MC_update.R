@@ -1,27 +1,29 @@
-# assuming p follows GBM
+#-- Assuming underlying stock follows GBM --#
+# Here only did one time step in monte carlo simulation of GBM
 
-# s0: Initial portfolio value
-# mu: Drift
-# sigma: Volatility
-# p: probability of VaR
-# t: Default 5/252
-# npaths: number of paths to generate bm
+#Input:
+  # s0: Initial portfolio value
+  # mu: Drift
+  # sigma: Volatility
+  # p: probability of VaR/ES
+  # dRtn: 1/5/10 days of return
+  # dt: Default 5/252
+  # npaths: number of paths to generate bm
 
-# only did one time step here in monte carlo simulation of GBM
+#Output:
+  # Monte Carlo VaR/ES for one stock
 
 MCVaR <- function(s0, mu, sigma, p, npaths,years,dRtn){
   
-  dRtn <- 5
-  s0 <- 10000
-  horizon <- dRtn/252
-  p <- 0.99
-  years <- 5 
-  npts <- 252*years
-  npaths <- 10000
-  ntrials <- length(mu) 
+  # dRtn <- 5
+  # s0 <- 10000
+  # p <- 0.99
+  # years <- 5  
+  # npaths <- 10000
   
-  # mu <- par1$mu_gbm
-  # sigma <- par1$sigma_gbm
+  horizon <- dRtn/252
+  npts <- 252*years
+  ntrials <- length(mu) 
   
   MCVaR <- NA
   st_bm <- matrix(0,nrow=ntrials,ncol=npaths)
@@ -37,19 +39,17 @@ MCVaR <- function(s0, mu, sigma, p, npaths,years,dRtn){
 }
 
 
-MCES <- function(s0, mu, sigma, p, dt, npaths,years,dRtn){
+MCES <- function(s0, mu, sigma, p,npaths,years,dRtn){
   
-  dRtn <- 5
-  s0 <- 10000
+  # dRtn <- 5
+  # s0 <- 10000
+  # p <- 0.99
+  # years <- 5   
+  # npaths <- 10000 
+  
   horizon <- dRtn/252
-  p <- 0.99
-  years <- 5 
   npts <- 252*years
-  npaths <- 10000
   ntrials <- length(mu) 
-  
-  # mu <- par1$mu_gbm
-  # sigma <- par1$sigma_gbm
   
   MCES <- NA
   loss_point <- NA
