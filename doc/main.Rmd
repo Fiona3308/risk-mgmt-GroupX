@@ -50,6 +50,8 @@ For the risk calculation system, we have three parts:
 * Part 1: Calculate the risk for individual stock
 * Part 2: Calculate the risk for portfolio that only including two stocks
 * Part 3: Calculate the risk for portfolio that including two stocks and two options
+
+We calculated parameters that calibrated to historical stock prices.
 ```{r}
 # calculate parameter for stocks/portfolio return
 source("../code/parameter/winEstGBM.R")

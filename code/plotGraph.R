@@ -12,7 +12,7 @@ plotGraph <- function(index,Dates){
   
   # create a dataframe
   df <- cbind.data.frame(Dates,index)
-  
+
   # plot
   ggplot()+
     geom_line(aes(x=df$Dates,y=df$index,color="VaR"))
