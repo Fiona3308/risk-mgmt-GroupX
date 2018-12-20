@@ -112,9 +112,14 @@ plotGraph(Hvar,XOM$date)
 plotGraph(Gvar,XOM$date)
 plotGraph(MVaR,XOM$date)
 
-#Backtest
-BT<-BackTest(s1,Gvar,5,10000)
-plotGraph(BT,XOM$Dates)
+#BackTest
+Gvar_BT<-BackTest(s1,Gvar,1,10000)
+plotGraph(Gvar_BT,XOM$Dates)
+#plot loss vs VaR
+GLoss<-Loss(s1,Gvar,1,10000)
+plot(x=XOM$Dates[1:(length(XOM$Dates)-1*252-5)],y=GLoss[,1],type="l",col="2")
+lines(x=XOM$Dates[1:(length(XOM$Dates)-5*252)],Gvar[1:(length(XOM$Dates)-5*252)],y=,type="l",col="3")
+legend("topright",legend=c("ES by E&I changes","ES by p changes"),col=2:3,lty=1)
 
 
 # Monte Carlo VaR
